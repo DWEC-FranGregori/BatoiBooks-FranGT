@@ -15,11 +15,18 @@ function booksWithStatus(array, string) {
 }
 
 function averagePriceOfBooks(array) {
-  return array.reduce((total, book) => (book.price += total)) / array.length;
+  return (
+    Math.round(
+      (array.reduce((total, book) => (book.price += total)) / array.length +
+        Number.EPSILON) *
+        100
+    ) / 100
+  ).concat(" €");
 }
 export default {
   booksFromUser,
   booksFromModule,
   booksCheeperThan,
+  booksWithStatus,
   averagePriceOfBooks,
 };
