@@ -42,7 +42,7 @@ function incrementPriceOfbooks(array, number) {
 }
 
 function getUserById(array, number) {
-  return array.find((user) => user.id === number);
+  return checkIsUndefined(array.find((user) => user.id === number));
 }
 
 function getUserIndexById(array, number) {
@@ -50,15 +50,22 @@ function getUserIndexById(array, number) {
 }
 
 function getUserByNickName(array, string) {
-  return array.find((user) => user.nick === string);
+  return checkIsUndefined(array.find((user) => user.nick === string));
 }
 
 function getModuleByCode(array, string) {
-  return array.find((module) => module.code === string);
+  return checkIsUndefined(array.find((module) => module.code === string));
 }
 
 function getModuleIndexByCode(array, string) {
   return array.findIndex((module) => module.code === string);
+}
+
+function checkIsUndefined(data) {
+  if (!data) {
+    data = new Object();
+  }
+  return data;
 }
 export default {
   booksFromUser,
