@@ -40,6 +40,10 @@ function booksNotSold(array) {
 function incrementPriceOfbooks(array, number) {
   array.map((book) => (book.price *= 100 * (100 * number)));
 }
+
+function getUserById(array, number) {
+  return array.find((user) => user.id == number);
+}
 export default {
   booksFromUser,
   booksFromModule,
@@ -50,4 +54,5 @@ export default {
   booksNotOfTypeNote,
   booksNotSold,
   incrementPriceOfbooks,
+  getUserById,
 };
