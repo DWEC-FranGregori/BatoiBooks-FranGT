@@ -48,6 +48,10 @@ function getUserById(array, number) {
 function getUserIndexById(array, number) {
   return array.findIndex((user) => user.id === number);
 }
+
+function getUserByNickName(array, string) {
+  return array.find((user) => user.nick === string);
+}
 export default {
   booksFromUser,
   booksFromModule,
@@ -60,4 +64,5 @@ export default {
   incrementPriceOfbooks,
   getUserById,
   getUserIndexById,
+  getUserByNickName,
 };
