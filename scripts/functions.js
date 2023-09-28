@@ -13,4 +13,13 @@ function booksCheeperThan(array, number) {
 function booksWithStatus(array, string) {
   return array.filter((book) => book.status === string);
 }
-export default { booksFromUser, booksFromModule, booksCheeperThan };
+
+function averagePriceOfBooks(array) {
+  return array.reduce((total, book) => (book.price += total)) / array.length;
+}
+export default {
+  booksFromUser,
+  booksFromModule,
+  booksCheeperThan,
+  averagePriceOfBooks,
+};
