@@ -38,7 +38,7 @@ function booksNotSold(array) {
 }
 
 function incrementPriceOfbooks(array, number) {
-  array.map((book) => (book.price *= 100 * (100 * number)));
+  array.map((book) => (book.price *= 1 + number));
 }
 
 function getUserById(array, number) {
