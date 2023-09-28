@@ -23,7 +23,8 @@ function averagePriceOfBooks(array) {
   }
   return (
     (
-      array.reduce((total, book) => ((total += book.price), 0)) / array.length
+      array.reduce((total, frontBook) => (total += frontBook.price), 0) /
+      array.length
     ).toFixed(2) + " €"
   );
 }
