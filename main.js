@@ -17,3 +17,4 @@ document.querySelector("#app").innerHTML = `
 
 console.log(functions.booksFromUser(data["books"], 4));
 console.log(functions.booksFromModule(data["books"], "5021"));
+console.log(functions.booksCheeperThan(data["books"], 20));
