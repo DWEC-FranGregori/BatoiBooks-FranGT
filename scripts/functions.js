@@ -23,6 +23,8 @@ function averagePriceOfBooks(array) {
     ) / 100
   ).concat(" €");
 }
+
+function booksOfTypeNote(array) {}
 export default {
   booksFromUser,
   booksFromModule,
