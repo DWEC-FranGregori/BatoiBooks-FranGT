@@ -1,3 +1,5 @@
+const APUNTES = "Apunts";
+
 function booksFromUser(array, number) {
   return array.filter((book) => book.idUser === number);
 }
@@ -16,19 +18,20 @@ function booksWithStatus(array, string) {
 
 function averagePriceOfBooks(array) {
   return (
-    Math.round(
-      (array.reduce((total, book) => (book.price += total)) / array.length +
-        Number.EPSILON) *
-        100
-    ) / 100
-  ).concat(" €");
+    (
+      array.reduce((total, book) => ((total += book.price), 0)) / array.length
+    ).toFixed(2) + " €"
+  );
 }
 
-function booksOfTypeNote(array) {}
+function booksOfTypeNote(array) {
+  return array.filter((book) => book.publisher === APUNTES);
+}
 export default {
   booksFromUser,
   booksFromModule,
   booksCheeperThan,
   booksWithStatus,
   averagePriceOfBooks,
+  booksOfTypeNote,
 };
