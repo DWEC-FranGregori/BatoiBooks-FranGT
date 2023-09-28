@@ -1,4 +1,5 @@
 const APUNTES = "Apunts";
+const VACIO = "";
 
 function booksFromUser(array, number) {
   return array.filter((book) => book.idUser === number);
@@ -31,6 +32,10 @@ function booksOfTypeNote(array) {
 function booksNotOfTypeNote(array) {
   return array.filter((book) => book.publisher !== APUNTES);
 }
+
+function booksNotSold(array) {
+  return array.filter((book) => book.soldDate === VACIO);
+}
 export default {
   booksFromUser,
   booksFromModule,
@@ -39,4 +44,5 @@ export default {
   averagePriceOfBooks,
   booksOfTypeNote,
   booksNotOfTypeNote,
+  booksNotSold,
 };
