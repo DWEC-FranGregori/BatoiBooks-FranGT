@@ -1,5 +1,7 @@
 import "./style.css";
 import batoiBookLogo from "./public/logoBatoi.png";
+import data from "./datos";
+import functions from "./scripts/functions";
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -12,3 +14,5 @@ document.querySelector("#app").innerHTML = `
     </p>
   </div>
 `;
+
+console.log(functions.booksFromUser(data["books"], 4));
