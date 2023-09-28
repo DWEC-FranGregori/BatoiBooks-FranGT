@@ -27,6 +27,10 @@ function averagePriceOfBooks(array) {
 function booksOfTypeNote(array) {
   return array.filter((book) => book.publisher === APUNTES);
 }
+
+function booksNotOfTypeNote(array) {
+  return array.filter((book) => book.publisher !== APUNTES);
+}
 export default {
   booksFromUser,
   booksFromModule,
@@ -34,4 +38,5 @@ export default {
   booksWithStatus,
   averagePriceOfBooks,
   booksOfTypeNote,
+  booksNotOfTypeNote,
 };
