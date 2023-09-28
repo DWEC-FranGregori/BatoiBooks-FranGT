@@ -18,6 +18,9 @@ function booksWithStatus(array, string) {
 }
 
 function averagePriceOfBooks(array) {
+  if (!array.length) {
+    return "0.00 €";
+  }
   return (
     (
       array.reduce((total, book) => ((total += book.price), 0)) / array.length

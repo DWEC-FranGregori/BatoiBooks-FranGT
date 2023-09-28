@@ -88,7 +88,7 @@ describe("Funciones con libros", () => {
     expect(response).toBe("60.00 €");
   });
 
-  test("averagePriceOfBooks de un array vacÃ­o devuelve 0", () => {
+  test("averagePriceOfBooks de un array vaci­o devuelve 0", () => {
     const response = functions.averagePriceOfBooks([]);
     expect(response).toBe("0.00 €");
   });
