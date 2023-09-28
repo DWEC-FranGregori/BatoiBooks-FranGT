@@ -36,6 +36,10 @@ function booksNotOfTypeNote(array) {
 function booksNotSold(array) {
   return array.filter((book) => book.soldDate === VACIO);
 }
+
+function incrementPriceOfbooks(array, number) {
+  array.map((book) => (book.price *= 100 * (100 * number)));
+}
 export default {
   booksFromUser,
   booksFromModule,
@@ -45,4 +49,5 @@ export default {
   booksOfTypeNote,
   booksNotOfTypeNote,
   booksNotSold,
+  incrementPriceOfbooks,
 };
