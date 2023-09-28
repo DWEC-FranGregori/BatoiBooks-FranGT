@@ -1,5 +1,3 @@
-import { ar } from "vitest/dist/reporters-5f784f42";
-
 const APUNTES = "Apunts";
 const VACIO = "";
 
@@ -58,6 +56,10 @@ function getUserByNickName(array, string) {
 function getModuleByCode(array, string) {
   return array.find((module) => module.code === string);
 }
+
+function getModuleIndexByCode(array, string) {
+  return array.findIndex((module) => module.code === string);
+}
 export default {
   booksFromUser,
   booksFromModule,
@@ -72,4 +74,5 @@ export default {
   getUserIndexById,
   getUserByNickName,
   getModuleByCode,
+  getModuleIndexByCode,
 };
