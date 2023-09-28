@@ -42,7 +42,11 @@ function incrementPriceOfbooks(array, number) {
 }
 
 function getUserById(array, number) {
-  return array.find((user) => user.id == number);
+  return array.find((user) => user.id === number);
+}
+
+function getUserIndexById(array, number) {
+  return array.findIndex((user) => user.id === number);
 }
 export default {
   booksFromUser,
@@ -55,4 +59,5 @@ export default {
   booksNotSold,
   incrementPriceOfbooks,
   getUserById,
+  getUserIndexById,
 };
