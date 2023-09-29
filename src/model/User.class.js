@@ -9,3 +9,5 @@ class User {
     return `Soy ${this.nick} con id ${this.id} y mi correo es ${this.email}`;
   }
 }
+
+module.exports = User;

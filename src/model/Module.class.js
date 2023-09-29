@@ -10,3 +10,5 @@ class Module {
     return `El módulo ${this.vliteral} con código ${this.code}`;
   }
 }
+
+module.exports = Module;

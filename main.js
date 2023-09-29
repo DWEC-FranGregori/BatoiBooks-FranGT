@@ -3,6 +3,8 @@ import batoiBookLogo from "./public/logoBatoi.png";
 import data from "./datos";
 import functions from "./src/functions";
 
+const Users = require("./src/model/Users.class");
+
 document.querySelector("#app").innerHTML = `
   <div>
     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
@@ -28,3 +30,12 @@ console.log(
     0.1
   )
 );
+
+console.log("PARTE DE CLASES");
+
+let users = new Users();
+users.populateData(data["books"]);
+
+users.forEach((user) => {
+  console.log(user);
+});

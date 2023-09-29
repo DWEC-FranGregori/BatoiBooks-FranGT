@@ -1,6 +1,8 @@
-module.exports = class Users {
-  constructor(_data) {}
-  populateData() {}
+import User from "../";
+
+class Users {
+  constructor(_data_) {}
+  populateData(arrayUsers) {}
   addItem() {}
   removeItem() {}
   getItemByCode() {}
@@ -8,4 +10,6 @@ module.exports = class Users {
   getUserById(arrayUsers, idUser) {}
   getUserIndexById(arrayUsers, idUser) {}
   getUserByNickName(arrayUsers, nickname) {}
-};
+}
+
+module.export = Users;
