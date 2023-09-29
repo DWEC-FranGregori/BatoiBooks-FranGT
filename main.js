@@ -1,7 +1,7 @@
 import "./style.css";
 import batoiBookLogo from "./public/logoBatoi.png";
 import data from "./datos";
-import functions from "./scripts/functions";
+import functions from "./src/functions";
 
 document.querySelector("#app").innerHTML = `
   <div>
