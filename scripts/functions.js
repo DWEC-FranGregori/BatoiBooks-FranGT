@@ -1,68 +1,111 @@
 const APUNTES = "Apunts";
 const VACIO = "";
+const ESTADOS = ["bad", "good", "new"];
 
-function booksFromUser(array, number) {
-  return array.filter((book) => book.idUser === number);
+function booksFromUser(arrayBooks, idUser) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+  return arrayBooks.filter((book) => book.idUser === idUser);
 }
 
-function booksFromModule(array, string) {
-  return array.filter((book) => book.idModule === string);
+function booksFromModule(arrayBooks, module) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+  return arrayBooks.filter((book) => book.idModule === module);
 }
 
-function booksCheeperThan(array, number) {
-  return array.filter((book) => book.price <= number);
+function booksCheeperThan(arrayBooks, price) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+  return arrayBooks.filter((book) => book.price <= price);
 }
 
-function booksWithStatus(array, string) {
-  return array.filter((book) => book.status === string);
+function booksWithStatus(arrayBooks, status) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+  if (!ESTADOS.includes(status)) {
+    return [];
+  }
+  return arrayBooks.filter((book) => book.status === status);
 }
 
-function averagePriceOfBooks(array) {
-  if (!array.length) {
+function averagePriceOfBooks(arrayBooks) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
     return "0.00 €";
   }
   return (
     (
-      array.reduce((total, frontBook) => (total += frontBook.price), 0) /
-      array.length
+      arrayBooks.reduce((total, book) => (total += book.price), 0) /
+      arrayBooks.length
     ).toFixed(2) + " €"
   );
 }
 
-function booksOfTypeNote(array) {
-  return array.filter((book) => book.publisher === APUNTES);
+function booksOfTypeNote(arrayBooks) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+  return arrayBooks.filter((book) => book.publisher === APUNTES);
 }
 
-function booksNotOfTypeNote(array) {
-  return array.filter((book) => book.publisher !== APUNTES);
+function booksNotOfTypeNote(arrayBooks) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+  return arrayBooks.filter((book) => book.publisher !== APUNTES);
 }
 
-function booksNotSold(array) {
-  return array.filter((book) => book.soldDate === VACIO);
+function booksNotSold(arrayBooks) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+  return arrayBooks.filter((book) => book.soldDate === VACIO);
 }
 
-function incrementPriceOfbooks(array, number) {
-  array.map((book) => (book.price *= 1 + number));
+function incrementPriceOfbooks(arrayBooks, percentajeToIncrement) {
+  if (!isArrayAndContainsInfo(arrayBooks)) {
+    return;
+  }
+  arrayBooks.map((book) => (book.price *= 1 + percentajeToIncrement));
 }
 
-function getUserById(array, number) {
-  return checkIsUndefined(array.find((user) => user.id === number));
+function getUserById(arrayUsers, idUser) {
+  if (!isArrayAndContainsInfo(arrayUsers)) {
+    return [];
+  }
+  return checkIsUndefined(arrayUsers.find((user) => user.id === idUser));
 }
 
-function getUserIndexById(array, number) {
-  return array.findIndex((user) => user.id === number);
+function getUserIndexById(arrayUsers, idUser) {
+  if (!isArrayAndContainsInfo(arrayUsers)) {
+    return [];
+  }
+  return arrayUsers.findIndex((user) => user.id === idUser);
 }
 
-function getUserByNickName(array, string) {
-  return checkIsUndefined(array.find((user) => user.nick === string));
+function getUserByNickName(arrayUsers, nickname) {
+  if (!isArrayAndContainsInfo(arrayUsers)) {
+    return new Object();
+  }
+  return checkIsUndefined(arrayUsers.find((user) => user.nick === nickname));
 }
 
-function getModuleByCode(array, string) {
-  return checkIsUndefined(array.find((module) => module.code === string));
+function getModuleByCode(arrayModules, code) {
+  if (!isArrayAndContainsInfo(arrayModules)) {
+    return new Object();
+  }
+  return checkIsUndefined(arrayModules.find((module) => module.code === code));
 }
 
-function getModuleIndexByCode(array, string) {
-  return array.findIndex((module) => module.code === string);
+function getModuleIndexByCode(arrayModules, code) {
+  if (!isArrayAndContainsInfo(arrayModules)) {
+    return -1;
+  }
+  return arrayModules.findIndex((module) => module.code === code);
 }
 
 function checkIsUndefined(data) {
@@ -70,6 +113,10 @@ function checkIsUndefined(data) {
     data = new Object();
   }
   return data;
+}
+
+function isArrayAndContainsInfo(array) {
+  return Array.isArray(array) && array.length;
 }
 export default {
   booksFromUser,
