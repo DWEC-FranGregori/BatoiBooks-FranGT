@@ -4,4 +4,8 @@ class User {
     this.email = email;
     this.nick = nick;
   }
+
+  toString() {
+    return `Soy ${this.nick} con id ${this.id} y mi correo es ${this.email}`;
+  }
 }
