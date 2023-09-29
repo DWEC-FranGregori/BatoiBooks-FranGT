@@ -84,7 +84,7 @@ function incrementPriceOfbooks(arrayBooks, percentajeToIncrement) {
   if (!isValidPercentaje(percentajeToIncrement)) {
     return;
   }
-  arrayBooks.map((book) => (book.price *= 1 + percentajeToIncrement));
+  return arrayBooks.map((book) => (book.price *= 1 + percentajeToIncrement));
 }
 
 function getUserById(arrayUsers, idUser) {

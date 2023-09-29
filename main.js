@@ -14,3 +14,17 @@ document.querySelector("#app").innerHTML = `
     </p>
   </div>
 `;
+
+console.log(functions.booksFromUser(data["books"], 4));
+console.log(
+  functions.booksWithStatus(
+    functions.booksFromModule(data["books"], "5021"),
+    "good"
+  )
+);
+console.log(
+  functions.incrementPriceOfbooks(
+    functions.booksFromModule(data["books"], "5025"),
+    0.1
+  )
+);
