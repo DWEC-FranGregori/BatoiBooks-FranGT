@@ -1,9 +1,15 @@
 const APUNTES = "Apunts";
 const VACIO = "";
 const ESTADOS = ["bad", "good", "new"];
+const MIN_PERCENTAJE_TO_INCREMENT = 0.01;
+const MAX_PERCENTAJE_TO_INCREMENT = 0.99;
 
 function booksFromUser(arrayBooks, idUser) {
   if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+
+  if (!isValidId(idUser)) {
     return [];
   }
   return arrayBooks.filter((book) => book.idUser === idUser);
@@ -18,6 +24,10 @@ function booksFromModule(arrayBooks, module) {
 
 function booksCheeperThan(arrayBooks, price) {
   if (!isArrayAndContainsInfo(arrayBooks)) {
+    return [];
+  }
+
+  if (!isValidPrice(price)) {
     return [];
   }
   return arrayBooks.filter((book) => book.price <= price);
@@ -70,6 +80,10 @@ function incrementPriceOfbooks(arrayBooks, percentajeToIncrement) {
   if (!isArrayAndContainsInfo(arrayBooks)) {
     return;
   }
+
+  if (!isValidPercentaje(percentajeToIncrement)) {
+    return;
+  }
   arrayBooks.map((book) => (book.price *= 1 + percentajeToIncrement));
 }
 
@@ -77,11 +91,19 @@ function getUserById(arrayUsers, idUser) {
   if (!isArrayAndContainsInfo(arrayUsers)) {
     return [];
   }
+
+  if (!isValidId(idUser)) {
+    return [];
+  }
   return checkIsUndefined(arrayUsers.find((user) => user.id === idUser));
 }
 
 function getUserIndexById(arrayUsers, idUser) {
   if (!isArrayAndContainsInfo(arrayUsers)) {
+    return [];
+  }
+
+  if (!isValidId(idUser)) {
     return [];
   }
   return arrayUsers.findIndex((user) => user.id === idUser);
@@ -114,9 +136,32 @@ function checkIsUndefined(data) {
   }
   return data;
 }
+function isValidPercentaje(percentajeToIncrement) {
+  return (
+    isNumber(percentajeToIncrement) &&
+    percentajeToIncrement >= MIN_PERCENTAJE_TO_INCREMENT &&
+    percentajeToIncrement <= MAX_PERCENTAJE_TO_INCREMENT
+  );
+}
 
 function isArrayAndContainsInfo(array) {
   return Array.isArray(array) && array.length;
+}
+
+function isValidPrice(price) {
+  return isNumber(price) && isPositive(price);
+}
+
+function isValidId(idUser) {
+  return isNumber(idUser) && isPositive(idUser);
+}
+
+function isNumber(number) {
+  return !Number.isNaN(number);
+}
+
+function isPositive(number) {
+  return number >= 0;
 }
 export default {
   booksFromUser,
