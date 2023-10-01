@@ -16,24 +16,33 @@ class Modules {
       );
     });
   }
-  addItem() {}
-  removeItem() {}
-  getItemByCode() {}
-  toString() {}
-  getModuleByCode(arrayModules, code) {
-    if (!isArrayAndContainsInfo(arrayModules)) {
-      return {};
+
+  addItem(module) {
+    this.data.push(module);
+  }
+  removeItem(code) {
+    const itemToRemove = this.getModuleByCode(code);
+    if (itemToRemove == {}) {
+      throw new IdNotFound();
     }
-    return checkIsUndefined(
-      arrayModules.find((module) => module.code === code)
-    );
+    this.data = this.data.filter(function (book) {
+      return book.code !== code;
+    });
   }
 
-  getModuleIndexByCode(arrayModules, code) {
-    if (!isArrayAndContainsInfo(arrayModules)) {
+  toString() {}
+  getModuleByCode(code) {
+    if (!isArrayAndContainsInfo(this.data)) {
+      return {};
+    }
+    return checkIsUndefined(this.data.find((module) => module.code === code));
+  }
+
+  getModuleIndexByCode(code) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return -1;
     }
-    return arrayModules.findIndex((module) => module.code === code);
+    return this.data.findIndex((module) => module.code === code);
   }
 }
 

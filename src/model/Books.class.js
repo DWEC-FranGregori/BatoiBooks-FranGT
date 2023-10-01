@@ -25,8 +25,8 @@ class Books {
     if(itemToRemove == {}){
       throw new IdNotFound();
     }
-    this.data = this.data.filter(function (id) {
-      return id !== id;
+    this.data = this.data.filter(function (book) {
+      return book.id !== id;
   });
   }
 
@@ -37,7 +37,7 @@ class Books {
     }
     return item;
   }
-  
+
   booksFromUser(arrayBooks, idUser) {
     if (!isArrayAndContainsInfo(arrayBooks)) {
       return [];
