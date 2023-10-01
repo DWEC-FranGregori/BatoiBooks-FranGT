@@ -20,6 +20,7 @@ class Modules {
   addItem(module) {
     this.data.push(module);
   }
+
   removeItem(code) {
     const itemToRemove = this.getModuleByCode(code);
     if (itemToRemove == {}) {

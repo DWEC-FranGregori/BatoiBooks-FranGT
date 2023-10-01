@@ -9,38 +9,49 @@ class Users extends UsersInterface {
       this.data.push(new User(user.id, user.email, user.nickname));
     });
   }
-  addItem() {}
-  removeItem() {}
-  getItemByCode() {}
+  addItem(user) {
+    user.id = getNewId();
+    this.data.push(user);
+  }
+  removeItem(id) {
+    const userToRemove = this.getItemById(id);
+    if(userToRemove == {}){
+      throw new IdNotFound();
+    }
+    this.data= this.data.filter(function(user){
+      return user.id !== id;
+    });
+  }
+
   toString() {}
 
-  getUserById(arrayUsers, idUser) {
-    if (!isArrayAndContainsInfo(arrayUsers)) {
+  getItemById(idUser) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return {};
     }
 
     if (!isValidId(idUser)) {
       return {};
     }
-    return checkIsUndefined(arrayUsers.find((user) => user.id === idUser));
+    return checkIsUndefined(this.data.find((user) => user.id === idUser));
   }
 
-  getUserIndexById(arrayUsers, idUser) {
-    if (!isArrayAndContainsInfo(arrayUsers)) {
+  getUserIndexById(idUser) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
 
     if (!isValidId(idUser)) {
       return [];
     }
-    return arrayUsers.findIndex((user) => user.id === idUser);
+    return this.data.findIndex((user) => user.id === idUser);
   }
 
-  getUserByNickName(arrayUsers, nickname) {
-    if (!isArrayAndContainsInfo(arrayUsers)) {
+  getUserByNickName(nickname) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return new Object();
     }
-    return checkIsUndefined(arrayUsers.find((user) => user.nick === nickname));
+    return checkIsUndefined(this.data.find((user) => user.nick === nickname));
   }
 }
 
@@ -65,6 +76,13 @@ function checkIsUndefined(data) {
     data = {};
   }
   return data;
+}
+
+function getNewId(){
+  if (this.data.length < 1) {
+    return 1;
+  }
+  return ++this.data.reduce((userBefore, userAfter) => Math.max(userBefore.id, userAfter.id), -Infinity); 
 }
 
 module.exports = Users;
