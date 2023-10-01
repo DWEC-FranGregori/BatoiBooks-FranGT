@@ -16,11 +16,11 @@ class Users extends UsersInterface {
 
   getUserById(arrayUsers, idUser) {
     if (!isArrayAndContainsInfo(arrayUsers)) {
-      return [];
+      return {};
     }
 
     if (!isValidId(idUser)) {
-      return [];
+      return {};
     }
     return checkIsUndefined(arrayUsers.find((user) => user.id === idUser));
   }

@@ -14,9 +14,30 @@ class Books {
       this.data.push(new Book(book));
     });
   }
-  addItem() {}
-  removeItem() {}
-  getItemByCode() {}
+
+  addItem(book) {
+    book.id = getNewId();
+    this.data.push(book);
+  }
+
+  removeItem(id) {
+    const itemToRemove = this.getItemById(id);
+    if(itemToRemove == {}){
+      throw new IdNotFound();
+    }
+    this.data = this.data.filter(function (id) {
+      return id !== id;
+  });
+  }
+
+  getItemById(id) {
+    const item = this.data.find((book) => book.id === id);
+    if(!item){
+      {};
+    }
+    return item;
+  }
+  
   booksFromUser(arrayBooks, idUser) {
     if (!isArrayAndContainsInfo(arrayBooks)) {
       return [];
@@ -143,6 +164,13 @@ function isValidPercentaje(percentajeToIncrement) {
 
 function isArrayAndContainsInfo(array) {
   return Array.isArray(array) && array.length;
+}
+
+function getNewId(){
+  if (this.data.length < 1) {
+    return 1;
+  }
+  return ++this.data.reduce((bookBefore, bookAfter) => Math.max(bookBefore.id, bookAfter.id), -Infinity); 
 }
 
 module.exports = Books;

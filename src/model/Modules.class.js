@@ -39,7 +39,7 @@ class Modules {
 
 function checkIsUndefined(data) {
   if (!data) {
-    data = new Object();
+    data = {};
   }
   return data;
 }
