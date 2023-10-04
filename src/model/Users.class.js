@@ -6,8 +6,8 @@ class Users extends UsersInterface {
   }
 
   populateData(arrayUsers) {
-    arrayUsers.forEach((user) => {
-      this.data.push(new User(user.id, user.email, user.nickname));
+    this.data.forEach((user) => {
+      arrayUsers.push(new User(user.id, user.email, user.nickname));
     });
   }
 

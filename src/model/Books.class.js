@@ -10,14 +10,14 @@ class Books {
     this.data = [];
   }
   populateData(arrayBooks) {
-    arrayBooks.forEach((book) => {
-      this.data.push(new Book(book));
+    this.data.forEach((book) => {
+      arrayBooks.push(new Book(book));
     });
   }
 
   addItem(book) {
     book.id = getNewId();
-    this.data.push(book);
+    this.data.push(new Book(book));
   }
 
   removeItem(id) {
@@ -38,87 +38,87 @@ class Books {
     return item;
   }
 
-  booksFromUser(arrayBooks, idUser) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  booksFromUser( idUser) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
 
     if (!isValidId(idUser)) {
       return [];
     }
-    return arrayBooks.filter((book) => book.idUser === idUser);
+    return this.data.filter((book) => book.idUser === idUser);
   }
 
-  booksFromModule(arrayBooks, module) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  booksFromModule(module) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
-    return arrayBooks.filter((book) => book.idModule === module);
+    return this.data.filter((book) => book.idModule === module);
   }
 
-  booksCheeperThan(arrayBooks, price) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  booksCheeperThan(price) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
 
     if (!isValidPrice(price)) {
       return [];
     }
-    return arrayBooks.filter((book) => book.price <= price);
+    return this.data.filter((book) => book.price <= price);
   }
 
-  booksWithStatus(arrayBooks, status) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  booksWithStatus(status) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
     if (!ESTADOS.includes(status)) {
       return [];
     }
-    return arrayBooks.filter((book) => book.status === status);
+    return this.data.filter((book) => book.status === status);
   }
 
-  averagePriceOfBooks(arrayBooks) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  averagePriceOfBooks() {
+    if (!isArrayAndContainsInfo(this.data)) {
       return "0.00 €";
     }
     return (
       (
-        arrayBooks.reduce((total, book) => (total += book.price), 0) /
-        arrayBooks.length
+        this.data.reduce((total, book) => (total += book.price), 0) /
+        this.data.length
       ).toFixed(2) + " €"
     );
   }
 
-  booksOfTypeNote(arrayBooks) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  booksOfTypeNote() {
+    if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
-    return arrayBooks.filter((book) => book.publisher === APUNTES);
+    return this.data.filter((book) => book.publisher === APUNTES);
   }
 
-  booksNotOfTypeNote(arrayBooks) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  booksNotOfTypeNote() {
+    if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
-    return arrayBooks.filter((book) => book.publisher !== APUNTES);
+    return this.data.filter((book) => book.publisher !== APUNTES);
   }
 
-  booksNotSold(arrayBooks) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  booksNotSold() {
+    if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
-    return arrayBooks.filter((book) => book.soldDate === VACIO);
+    return this.data.filter((book) => book.soldDate === VACIO);
   }
 
-  incrementPriceOfbooks(arrayBooks, percentajeToIncrement) {
-    if (!isArrayAndContainsInfo(arrayBooks)) {
+  incrementPriceOfbooks(percentajeToIncrement) {
+    if (!isArrayAndContainsInfo(this.data)) {
       return;
     }
 
     if (!isValidPercentaje(percentajeToIncrement)) {
       return;
     }
-    return arrayBooks.map((book) => (book.price *= 1 + percentajeToIncrement));
+    return this.data.map((book) => (book.price *= 1 + percentajeToIncrement));
   }
 
   toString() {

@@ -5,8 +5,8 @@ class Modules {
     this.data = [];
   }
   populateData(arrayModules) {
-    arrayModules.forEach((module) => {
-      this.data.push(
+    this.data.forEach((module) => {
+      arrayModules.push(
         new Module(
           module.code,
           module.cliteral,
