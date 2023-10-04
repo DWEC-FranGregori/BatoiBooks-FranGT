@@ -2,7 +2,8 @@ import "./style.css";
 import batoiBookLogo from "./public/logoBatoi.png";
 import data from "./datos";
 
-const Users = require("./src/model/Users.class");
+import Users from "./src/model/Users.class";
+import Modules from "./src/model/Modules.class";
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -18,9 +19,22 @@ document.querySelector("#app").innerHTML = `
 
 console.log("PARTE DE CLASES");
 
-let users = new Users();
-users.populateData(data["books"]);
-
-users.forEach((user) => {
-  console.log(user);
+const modules = new Modules();
+const newModule = modules.addItem({
+  code: "AAAA",
+  cliteral: "Nuevo módulo",
+  vliteral: "Nou mòdul",
+  idCourse: "12",
 });
+const newModule2 = modules.addItem({
+  code: "BBBB",
+  cliteral: "Nuevo módulo",
+  vliteral: "Nou mòdul",
+  idCourse: "16",
+});
+
+modules.removeItem(newModule.code);
+
+console.log(newModule);
+console.log(newModule2);
+console.log(modules.length);

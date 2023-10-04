@@ -1,6 +1,6 @@
 import User from "./User.class";
 
-class Users {
+export default class Users {
   constructor() {
     this.data = [];
   }
@@ -13,7 +13,7 @@ class Users {
 
   addItem(user) {
     user.id = getNewId();
-    this.data.push(user);
+    this.data.push(new User(user));
   }
 
   removeItem(id) {
@@ -82,7 +82,7 @@ function checkIsUndefined(data) {
 }
 
 function getNewId() {
-  if (this.data.length < 1) {
+  if (this.data.length === 0) {
     return 1;
   }
   return (
@@ -92,5 +92,3 @@ function getNewId() {
     ) + 1
   );
 }
-
-module.exports = Users;

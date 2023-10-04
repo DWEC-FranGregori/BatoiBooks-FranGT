@@ -1,37 +1,45 @@
 import Module from "./Module.class";
 
-class Modules {
+export default class Modules {
   constructor() {
     this.data = [];
   }
+
   populateData(arrayModules) {
     arrayModules.forEach((module) => {
-      this.data.push(
-        new Module(
-          module.code,
-          module.cliteral,
-          module.vliteral,
-          module.idCourse
-        )
-      );
+      this.addItem(module);
     });
   }
 
   addItem(module) {
-    this.data.push(module);
+    this.data.push(
+      new Module(module.code, module.cliteral, module.vliteral, module.idCourse)
+    );
+    return new Module(
+      module.code,
+      module.cliteral,
+      module.vliteral,
+      module.idCourse
+    );
   }
 
   removeItem(code) {
     const itemToRemove = this.getModuleByCode(code);
-    if (itemToRemove == {}) {
-      throw new IdNotFound();
+    if (Object.keys(itemToRemove).length === 0) {
+      throw new Error("Id no encontrado");
     }
-    this.data = this.data.filter(function (book) {
-      return book.code !== code;
+    this.data = this.data.filter(function (module) {
+      return module.code !== code;
     });
+    return {};
   }
 
-  toString() {}
+  toString() {
+    let text = `Módulos (total ${this.data.length})`;
+    this.data.forEach((modulo) => text.concat(`\n    - ${modulo.toString}`));
+
+    return text;
+  }
   getModuleByCode(code) {
     if (!isArrayAndContainsInfo(this.data)) {
       return {};
@@ -57,5 +65,3 @@ function checkIsUndefined(data) {
 function isArrayAndContainsInfo(array) {
   return Array.isArray(array) && array.length;
 }
-
-module.exports = Modules;

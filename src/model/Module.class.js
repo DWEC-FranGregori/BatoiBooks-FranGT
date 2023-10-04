@@ -1,4 +1,4 @@
-export class Module {
+export default class Module {
   constructor(code, cliteral, vliteral, idCourse) {
     this.code = code;
     this.cliteral = cliteral;
@@ -7,6 +7,6 @@ export class Module {
   }
 
   toString() {
-    return `El módulo ${this.vliteral} con código ${this.code}`;
+    return `${this.code} ${this.vliteral} (${this.cliteral})`;
   }
 }

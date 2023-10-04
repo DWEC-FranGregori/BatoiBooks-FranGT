@@ -1,4 +1,4 @@
-export class Book {
+export default class Book {
   constructor(book) {
     (this.id = book.id),
       (this.idUser = book.idUser),
@@ -9,10 +9,12 @@ export class Book {
       (this.status = book.status),
       (this.photo = book.photo),
       (this.comments = book.comments),
-      (this.soldDate = book.soldDate);
+      (this.soldDate = book.soldDate || "");
   }
 
   toString() {
-    return `El libro con id ${this.object.id} está en estado: ${this.object.status} y pertenece al módulo ${this.object.module}`;
+    return `${this.idModule}. Editorial: ${this.publisher}. ${
+      this.pages
+    } páginas. ${this.price.toFixed(2) + " €"}.`;
   }
 }

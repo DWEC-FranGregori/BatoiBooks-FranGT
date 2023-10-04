@@ -1,12 +1,13 @@
 import Book from './Book.class';
 
 
+
 const VACIO = "";
 const ESTADOS = ["bad", "good", "new"];
 const MIN_PERCENTAJE_TO_INCREMENT = 0.01;
 const MAX_PERCENTAJE_TO_INCREMENT = 0.99;
 
-class Books {
+export default class Books {
   constructor() {
     this.data = [];
   }
@@ -24,8 +25,8 @@ class Books {
 
   removeItem(id) {
     const itemToRemove = this.getItemById(id);
-    if(itemToRemove == {}){
-      throw new IdNotFound();
+    if(typeof itemToRemove === "object"){
+      throw new Error("Id no encontrado");
     }
     this.data = this.data.filter(function (book) {
       return book.id !== id;
@@ -132,18 +133,6 @@ function isValidId(idUser) {
   return isNumber(idUser) && isPositive(idUser);
 }
 
-function isValidPercentaje(percentajeToIncrement) {
-  return (
-    isNumber(percentajeToIncrement) &&
-    percentajeToIncrement >= MIN_PERCENTAJE_TO_INCREMENT &&
-    percentajeToIncrement <= MAX_PERCENTAJE_TO_INCREMENT
-  );
-}
-
-function isArrayAndContainsInfo(array) {
-  return Array.isArray(array) && array.length;
-}
-
 function isValidPrice(price) {
   return isNumber(price) && isPositive(price);
 }
@@ -169,10 +158,12 @@ function isArrayAndContainsInfo(array) {
 }
 
 function getNewId(){
-  if (this.data.length < 1) {
+  if (!this.data.length || !this.data) {
     return 1;
+  }
+  if (this.data.length === 1) {
+    return 2;
   }
   return ++this.data.reduce((bookBefore, bookAfter) => Math.max(bookBefore.id, bookAfter.id), -Infinity); 
 }
 
-module.exports = Books;
