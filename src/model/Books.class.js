@@ -12,8 +12,8 @@ class Books {
   }
 
   populateData(arrayBooks) {
-    this.data.forEach((book) => {
-      arrayBooks.push(new Book(book));
+    arrayBooks.forEach((book) => {
+      this.data.push(new Book(book));
     });
   }
 

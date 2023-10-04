@@ -6,8 +6,8 @@ class Users {
   }
 
   populateData(arrayUsers) {
-    this.data.forEach((user) => {
-      arrayUsers.push(new User(user.id, user.email, user.nickname));
+    arrayUsers.forEach((user) => {
+      this.data.push(new User(user.id, user.email, user.nickname));
     });
   }
 
