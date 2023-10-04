@@ -12,8 +12,9 @@ export default class Users {
   }
 
   addItem(user) {
-    user.id = getNewId();
-    this.data.push(new User(user));
+    user.id = this.getNewId();
+    this.data.push(new User(user.id, user.email, user.nick));
+    return new User(user.id, user.email, user.nick);
   }
 
   removeItem(id) {
@@ -56,6 +57,18 @@ export default class Users {
     }
     return checkIsUndefined(this.data.find((user) => user.nick === nickname));
   }
+
+  getNewId() {
+    if (!this.data.length) {
+      return 1;
+    }
+    return (
+      this.data.reduce(
+        (userBefore, userAfter) => Math.max(userBefore.id, userAfter.id),
+        -Infinity
+      ) + 1
+    );
+  }
 }
 
 function isArrayAndContainsInfo(array) {
@@ -79,16 +92,4 @@ function checkIsUndefined(data) {
     data = {};
   }
   return data;
-}
-
-function getNewId() {
-  if (this.data.length === 0) {
-    return 1;
-  }
-  return (
-    this.data.reduce(
-      (userBefore, userAfter) => Math.max(userBefore.id, userAfter.id),
-      -Infinity
-    ) + 1
-  );
 }

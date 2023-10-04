@@ -35,11 +35,11 @@ export default class Modules {
   }
 
   toString() {
-    let text = `Módulos (total ${this.data.length})`;
-    this.data.forEach((modulo) => text.concat(`\n    - ${modulo.toString}`));
-
+    let text = "Módulos (total " + this.data.length + ")";
+    this.data.forEach((modulo) => (text += "\n    - " + modulo));
     return text;
   }
+
   getModuleByCode(code) {
     if (!isArrayAndContainsInfo(this.data)) {
       return {};
