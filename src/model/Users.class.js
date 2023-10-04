@@ -1,6 +1,6 @@
-const User = require("../model/User.class");
+import User from "./User.class";
 
-class Users extends UsersInterface {
+class Users {
   constructor() {
     this.data = [];
   }

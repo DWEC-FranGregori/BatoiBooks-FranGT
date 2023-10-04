@@ -1,4 +1,4 @@
-const Module = require("../model/Module.class");
+import Module from "./Module.class";
 
 class Modules {
   constructor() {

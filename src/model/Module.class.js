@@ -1,4 +1,4 @@
-class Module {
+export class Module {
   constructor(code, cliteral, vliteral, idCourse) {
     this.code = code;
     this.cliteral = cliteral;
@@ -10,5 +10,3 @@ class Module {
     return `El módulo ${this.vliteral} con código ${this.code}`;
   }
 }
-
-module.exports = Module;

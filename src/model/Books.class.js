@@ -1,4 +1,5 @@
-const Book = require("../model/Book.class");
+import Book from './Book.class';
+
 
 const VACIO = "";
 const ESTADOS = ["bad", "good", "new"];
@@ -9,6 +10,7 @@ class Books {
   constructor() {
     this.data = [];
   }
+
   populateData(arrayBooks) {
     this.data.forEach((book) => {
       arrayBooks.push(new Book(book));
