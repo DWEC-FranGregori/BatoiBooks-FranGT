@@ -18,15 +18,16 @@ export default class Books {
   }
 
   addItem(book) {
-    book.id = this.getNewId();
-    this.data.push(new Book(book));
-    return new Book(book);
+    let newBook = new Book(book);
+    newBook.id = this.getLastId() + 1;
+    this.data.push(newBook);
+    return newBook;
   }
 
   removeItem(id) {
     const itemToRemove = this.getItemById(id);
     if (itemToRemove === -1) {
-      throw Error("Id no encontrado");
+      throw new Error("Id no encontrado");
     }
     this.data = this.data.filter(function (book) {
       return book.id !== id;
@@ -46,7 +47,10 @@ export default class Books {
   }
 
   booksFromModule(module) {
-    return new Books(this.data.filter((book) => book.idModule === module));
+    const newBooks = new Books();
+    const booksFiltrered = this.data.filter((book) => book.idModule === module);
+    newBooks.populateData(booksFiltrered);
+    return newBooks;
   }
 
   booksCheeperThan(price) {
@@ -118,14 +122,11 @@ export default class Books {
     return `El libro con id ${this.data.id} está en estado: ${this.data.status} y pertenece al módulo ${this.data.module}`;
   }
 
-  getNewId() {
-    if (!this.data.length) {
-      return 1;
+  getLastId() {
+    if (this.data.length === 0) {
+      return 0;
     }
-    if (this.data.length == 1) {
-      return 2;
-    }
-    return Math.max(...this.data.map((book) => book.idUser), 0) + 1;
+    return this.data.reduce((maxId, book) => Math.max(maxId, book.id), 0);
   }
 }
 

@@ -18,8 +18,8 @@ export default class Users {
   }
 
   removeItem(id) {
-    const userToRemove = this.getItemById(id);
-    if (userToRemove === -1) {
+    const itemToRemove = this.getItemById(id);
+    if (Object.keys(itemToRemove).length === 0) {
       throw new Error("Id no encontrado");
     }
     this.data = this.data.filter(function (user) {
