@@ -1,17 +1,17 @@
-module.exports = class Books {
-  constructor(_data) {}
+export default class Books {
+  constructor(data) {}
   populateData() {}
   addItem() {}
   removeItem() {}
   getItemByCode() {}
   toString() {}
-  booksFromUser(arrayBooks, idUser) {}
-  booksFromModule(arrayBooks, module) {}
-  booksCheeperThan(arrayBooks, price) {}
-  booksWithStatus(arrayBooks, status) {}
-  averagePriceOfBooks(arrayBooks) {}
-  booksOfTypeNote(arrayBooks) {}
-  booksNotOfTypeNote(arrayBooks) {}
-  booksNotSold(arrayBooks) {}
-  incrementPriceOfbooks(arrayBooks, percentajeToIncrement) {}
-};
+  booksFromUser(idUser) {}
+  booksFromModule(module) {}
+  booksCheeperThan(price) {}
+  booksWithStatus(status) {}
+  averagePriceOfBooks() {}
+  booksOfTypeNote() {}
+  booksNotOfTypeNote() {}
+  booksNotSold() {}
+  incrementPriceOfbooks(percentajeToIncrement) {}
+}

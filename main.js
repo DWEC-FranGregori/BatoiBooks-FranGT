@@ -27,6 +27,5 @@ users.populateData(data["users"]);
 modules.populateData(data["modules"]);
 books.populateData(data["books"]);
 
-console.log(users);
-console.log(modules);
-console.log(books);
+console.log(books.booksFromModule("5021").booksWithStatus("good"));
+console.log(books.booksFromModule("5025").incrementPriceOfbooks(0.1));

@@ -1,15 +1,11 @@
-import User from "../";
-
-class Users {
-  constructor(_data_) {}
+export default class Users {
+  constructor(data) {}
   populateData(arrayUsers) {}
   addItem() {}
   removeItem() {}
   getItemByCode() {}
   toString() {}
-  getUserById(arrayUsers, idUser) {}
-  getUserIndexById(arrayUsers, idUser) {}
-  getUserByNickName(arrayUsers, nickname) {}
+  getUserById(idUser) {}
+  getUserIndexById(idUser) {}
+  getUserByNickName(nickname) {}
 }
-
-module.export = Users;

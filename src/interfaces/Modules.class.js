@@ -1,10 +1,10 @@
-module.exports = class Modules {
-  constructor(_data) {}
+export default class Modules {
+  constructor(data) {}
   populateData() {}
   addItem() {}
   removeItem() {}
   getItemByCode() {}
   toString() {}
-  getModuleByCode(arrayModules, code) {}
-  getModuleIndexByCode(arrayModules, code) {}
-};
+  getModuleByCode(code) {}
+  getModuleIndexByCode(code) {}
+}
