@@ -54,24 +54,23 @@ export default class Books {
   }
 
   booksCheeperThan(price) {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return [];
-    }
-
-    if (!isValidPrice(price)) {
-      return [];
-    }
-    return new Books(this.data.filter((book) => book.price <= price));
+    const newBooks = new Books();
+    const booksFiltrered = this.data.filter((book) => book.price <= price);
+    newBooks.populateData(booksFiltrered);
+    return newBooks;
   }
 
   booksWithStatus(status) {
+    const newBooks = new Books();
     if (!isArrayAndContainsInfo(this.data)) {
-      return [Function, Books];
+      return newBooks;
     }
     if (!ESTADOS.includes(status)) {
-      return [Function, Books];
+      return newBooks;
     }
-    return new Books(this.data.filter((book) => book.status === status));
+    const booksFiltrered = this.data.filter((book) => book.status === status);
+    newBooks.populateData(booksFiltrered);
+    return newBooks;
   }
 
   averagePriceOfBooks() {
@@ -87,17 +86,26 @@ export default class Books {
   }
 
   booksOfTypeNote() {
+    const newBooks = new Books();
     if (!isArrayAndContainsInfo(this.data)) {
-      return [];
+      return newBooks;
     }
-    return new Books(this.data.filter((book) => book.publisher === APUNTES));
+    const booksFiltrered = this.data.filter(
+      (book) => book.publisher === APUNTES
+    );
+    newBooks.populateData(booksFiltrered);
+    return newBooks;
   }
 
   booksNotOfTypeNote() {
+    const newBooks = new Books();
     if (!isArrayAndContainsInfo(this.data)) {
-      return [];
+      return newBooks;
     }
-    return new Books(this.data.filter((book) => book.publisher !== APUNTES));
+    const booksFiltrered = this.data.filter(
+      (book) => book.publisher !== APUNTES
+    );
+    return booksFiltrered;
   }
 
   booksNotSold() {
