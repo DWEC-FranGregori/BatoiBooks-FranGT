@@ -1,8 +1,7 @@
-import Book from './Book.class';
-
-
+import Book from "./Book.class";
 
 const VACIO = "";
+const APUNTES = "Apunts";
 const ESTADOS = ["bad", "good", "new"];
 const MIN_PERCENTAJE_TO_INCREMENT = 0.01;
 const MAX_PERCENTAJE_TO_INCREMENT = 0.99;
@@ -19,44 +18,35 @@ export default class Books {
   }
 
   addItem(book) {
-    book.id = getNewId();
+    book.id = this.getNewId();
     this.data.push(new Book(book));
+    return new Book(book);
   }
 
   removeItem(id) {
     const itemToRemove = this.getItemById(id);
-    if(typeof itemToRemove === "object"){
-      throw new Error("Id no encontrado");
+    if (itemToRemove === -1) {
+      throw Error("Id no encontrado");
     }
     this.data = this.data.filter(function (book) {
       return book.id !== id;
-  });
+    });
+    return {};
   }
 
   getItemById(id) {
-    const item = this.data.find((book) => book.id === id);
-    if(!item){
-      {};
-    }
-    return item;
+    return new Book(this.data.find((book) => book.id === id));
   }
 
-  booksFromUser( idUser) {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return [];
-    }
-
-    if (!isValidId(idUser)) {
-      return [];
-    }
-    return this.data.filter((book) => book.idUser === idUser);
+  booksFromUser(idUser) {
+    const newBooks = new Books();
+    const booksFiltrered = this.data.filter((value) => value.idUser === idUser);
+    newBooks.populateData(booksFiltrered);
+    return newBooks;
   }
 
   booksFromModule(module) {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return [];
-    }
-    return this.data.filter((book) => book.idModule === module);
+    return new Books(this.data.filter((book) => book.idModule === module));
   }
 
   booksCheeperThan(price) {
@@ -67,17 +57,17 @@ export default class Books {
     if (!isValidPrice(price)) {
       return [];
     }
-    return this.data.filter((book) => book.price <= price);
+    return new Books(this.data.filter((book) => book.price <= price));
   }
 
   booksWithStatus(status) {
     if (!isArrayAndContainsInfo(this.data)) {
-      return [];
+      return [Function, Books];
     }
     if (!ESTADOS.includes(status)) {
-      return [];
+      return [Function, Books];
     }
-    return this.data.filter((book) => book.status === status);
+    return new Books(this.data.filter((book) => book.status === status));
   }
 
   averagePriceOfBooks() {
@@ -96,21 +86,21 @@ export default class Books {
     if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
-    return this.data.filter((book) => book.publisher === APUNTES);
+    return new Books(this.data.filter((book) => book.publisher === APUNTES));
   }
 
   booksNotOfTypeNote() {
     if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
-    return this.data.filter((book) => book.publisher !== APUNTES);
+    return new Books(this.data.filter((book) => book.publisher !== APUNTES));
   }
 
   booksNotSold() {
     if (!isArrayAndContainsInfo(this.data)) {
       return [];
     }
-    return this.data.filter((book) => book.soldDate === VACIO);
+    return new Books(this.data.filter((book) => book.soldDate === VACIO));
   }
 
   incrementPriceOfbooks(percentajeToIncrement) {
@@ -125,7 +115,17 @@ export default class Books {
   }
 
   toString() {
-    return `El libro con id ${this._data_.id} está en estado: ${this._data_.status} y pertenece al módulo ${this._data_.module}`;
+    return `El libro con id ${this.data.id} está en estado: ${this.data.status} y pertenece al módulo ${this.data.module}`;
+  }
+
+  getNewId() {
+    if (!this.data.length) {
+      return 1;
+    }
+    if (this.data.length == 1) {
+      return 2;
+    }
+    return Math.max(...this.data.map((book) => book.idUser), 0) + 1;
   }
 }
 
@@ -156,14 +156,3 @@ function isValidPercentaje(percentajeToIncrement) {
 function isArrayAndContainsInfo(array) {
   return Array.isArray(array) && array.length;
 }
-
-function getNewId(){
-  if (!this.data.length || !this.data) {
-    return 1;
-  }
-  if (this.data.length === 1) {
-    return 2;
-  }
-  return ++this.data.reduce((bookBefore, bookAfter) => Math.max(bookBefore.id, bookAfter.id), -Infinity); 
-}
-

@@ -1,9 +1,10 @@
 import "./style.css";
-import batoiBookLogo from "./public/logoBatoi.png";
+import batoiBookLogo from "/logoBatoi.png";
 import data from "./datos";
 
-import Users from "./src/model/Users.class";
+import Users from "./src/model/users.class";
 import Modules from "./src/model/Modules.class";
+import Books from "./src/model/Books.class";
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -18,23 +19,14 @@ document.querySelector("#app").innerHTML = `
 `;
 
 console.log("PARTE DE CLASES");
+let users = new Users();
+let modules = new Modules();
+let books = new Books();
 
-const modules = new Modules();
-const newModule = modules.addItem({
-  code: "AAAA",
-  cliteral: "Nuevo módulo",
-  vliteral: "Nou mòdul",
-  idCourse: "12",
-});
-const newModule2 = modules.addItem({
-  code: "BBBB",
-  cliteral: "Nuevo módulo",
-  vliteral: "Nou mòdul",
-  idCourse: "16",
-});
+users.populateData(data["users"]);
+modules.populateData(data["modules"]);
+books.populateData(data["books"]);
 
-modules.removeItem(newModule.code);
-
-console.log(newModule);
-console.log(newModule2);
-console.log(modules.length);
+console.log(users);
+console.log(modules);
+console.log(books);

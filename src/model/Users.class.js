@@ -7,7 +7,7 @@ export default class Users {
 
   populateData(arrayUsers) {
     arrayUsers.forEach((user) => {
-      this.data.push(new User(user.id, user.email, user.nickname));
+      this.data.push(new User(user.id, user.email, user.nick));
     });
   }
 
@@ -19,25 +19,26 @@ export default class Users {
 
   removeItem(id) {
     const userToRemove = this.getItemById(id);
-    if (userToRemove == {}) {
-      throw new IdNotFound();
+    if (userToRemove === -1) {
+      throw new Error("Id no encontrado");
     }
     this.data = this.data.filter(function (user) {
       return user.id !== id;
     });
+    return {};
   }
 
-  toString() {}
+  toString() {
+    let text = "Usuarios (total " + this.data.length;
+    this.data.forEach(
+      (user) =>
+        (text += "\n    - " + user.nick + " (" + user.id + ") - " + user.email)
+    );
+    return text;
+  }
 
   getItemById(idUser) {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return {};
-    }
-
-    if (!isValidId(idUser)) {
-      return {};
-    }
-    return checkIsUndefined(this.data.find((user) => user.id === idUser));
+    return this.data.find((user) => user.id === idUser);
   }
 
   getUserIndexById(idUser) {
@@ -53,7 +54,7 @@ export default class Users {
 
   getUserByNickName(nickname) {
     if (!isArrayAndContainsInfo(this.data)) {
-      return new Object();
+      return {};
     }
     return checkIsUndefined(this.data.find((user) => user.nick === nickname));
   }
@@ -62,10 +63,12 @@ export default class Users {
     if (!this.data.length) {
       return 1;
     }
+    if (this.data.length == 1) {
+      return 2;
+    }
     return (
-      this.data.reduce(
-        (userBefore, userAfter) => Math.max(userBefore.id, userAfter.id),
-        -Infinity
+      this.data.reduce((userBefore, userAfter) =>
+        Math.max(userBefore.id, userAfter.id)
       ) + 1
     );
   }
