@@ -29,6 +29,7 @@ export default class Books {
     if (itemToRemove === -1) {
       throw new Error("Id no encontrado");
     }
+
     this.data = this.data.filter(function (book) {
       return book.id !== id;
     });
@@ -65,9 +66,11 @@ export default class Books {
     if (!isArrayAndContainsInfo(this.data)) {
       return newBooks;
     }
+
     if (!ESTADOS.includes(status)) {
       return newBooks;
     }
+
     const booksFiltrered = this.data.filter((book) => book.status === status);
     newBooks.populateData(booksFiltrered);
     return newBooks;
@@ -77,6 +80,7 @@ export default class Books {
     if (!isArrayAndContainsInfo(this.data)) {
       return "0.00 €";
     }
+
     return (
       (
         this.data.reduce((total, book) => (total += book.price), 0) /
@@ -90,22 +94,22 @@ export default class Books {
     if (!isArrayAndContainsInfo(this.data)) {
       return newBooks;
     }
+
     const booksFiltrered = this.data.filter(
       (book) => book.publisher === APUNTES
     );
+
     newBooks.populateData(booksFiltrered);
     return newBooks;
   }
 
   booksNotOfTypeNote() {
-    const newBooks = new Books();
-    if (!isArrayAndContainsInfo(this.data)) {
-      return newBooks;
-    }
     const booksFiltrered = this.data.filter(
       (book) => book.publisher !== APUNTES
     );
-    return booksFiltrered;
+    const newBooks = new Books();
+    newBooks.populateData(booksFiltrered);
+    return newBooks;
   }
 
   booksNotSold() {
@@ -123,7 +127,9 @@ export default class Books {
     if (!isValidPercentaje(percentajeToIncrement)) {
       return;
     }
-    return this.data.map((book) => (book.price *= 1 + percentajeToIncrement));
+    return this.data.map(
+      (book) => (book.price += book.price * percentajeToIncrement)
+    );
   }
 
   toString() {
