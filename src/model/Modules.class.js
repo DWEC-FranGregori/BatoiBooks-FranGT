@@ -1,67 +1,51 @@
-import Module from "./Module.class";
+import Module from "./module.class";
+
+import ModuleRepository from "../repositories/modules.repositories";
+const repository = new ModuleRepository();
 
 export default class Modules {
   constructor() {
     this.data = [];
   }
 
-  populateData(arrayModules) {
-    arrayModules.forEach((module) => {
-      this.addItem(module);
-    });
+  async getModuleByCode(code) {
+    await repository.getModuleByCode(code);
+    return this.data.find((item) => item.code === code) || {};
   }
 
-  addItem(module) {
-    this.data.push(
-      new Module(module.code, module.cliteral, module.vliteral, module.idCourse)
-    );
-    return new Module(
-      module.code,
-      module.cliteral,
-      module.vliteral,
-      module.idCourse
-    );
+  async populateData() {
+    this.data = await repository.getAllModules();
   }
 
-  removeItem(code) {
-    const itemToRemove = this.getModuleByCode(code);
-    if (Object.keys(itemToRemove).length === 0) {
-      throw new Error("Id no encontrado");
+  async addItem(payload) {
+    await repository.addModule(payload);
+    const newModule = new Module(
+      payload.code,
+      payload.cliteral,
+      payload.vliteral,
+      payload.idCourse
+    );
+    this.data.push(newModule);
+    return newModule;
+  }
+
+  async removeItem(code) {
+    await repository.removeModule(code);
+    const index = this.data.findIndex((item) => item.code === code);
+    if (index === -1) {
+      throw "No existe un módulo con código " + code;
     }
-    this.data = this.data.filter(function (module) {
-      return module.code !== code;
-    });
+    this.data.splice(index, 1);
     return {};
   }
 
   toString() {
-    let text = "Módulos (total " + this.data.length + ")";
-    this.data.forEach((modulo) => (text += "\n    - " + modulo));
-    return text;
+    let modulesToString = `Módulos (total ${this.data.length})`;
+    this.data.forEach(
+      (item) =>
+        (modulesToString += `
+    - ${item}`)
+    );
+    return modulesToString;
   }
-
-  getModuleByCode(code) {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return {};
-    }
-    return checkIsUndefined(this.data.find((module) => module.code === code));
-  }
-
-  getModuleIndexByCode(code) {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return -1;
-    }
-    return this.data.findIndex((module) => module.code === code);
-  }
-}
-
-function checkIsUndefined(data) {
-  if (!data) {
-    data = {};
-  }
-  return data;
-}
-
-function isArrayAndContainsInfo(array) {
-  return Array.isArray(array) && array.length;
 }

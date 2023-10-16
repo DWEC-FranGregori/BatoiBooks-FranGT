@@ -1,31 +1,44 @@
 import "./style.css";
-import batoiBookLogo from "/logoBatoi.png";
-import data from "./datos";
-
+import batoiLogo from "/logoBatoi.png";
+import Books from "./src/model/books.class";
 import Users from "./src/model/users.class";
-import Modules from "./src/model/Modules.class";
-import Books from "./src/model/Books.class";
+import Modules from "./src/model/modules.class";
+
+const books = new Books();
+const modules = new Modules();
+const users = new Users();
 
 document.querySelector("#app").innerHTML = `
   <div>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${batoiBookLogo}" class="logo vanilla" alt="Batoi logo" />
+    <a href="http://www.cipfpbatoi.es" target="_blank">
+      <img src="${batoiLogo}" class="logo" alt="CIP FP Batoi" />
     </a>
-    <h1>BatoiBooks</h1>
     <p class="read-the-docs">
-      Abre la consola para ver el resultado
+      Abre la consola (F12)
     </p>
   </div>
 `;
 
-console.log("PARTE DE CLASES");
-let users = new Users();
-let modules = new Modules();
-let books = new Books();
+function init() {
+  books.populateData();
+  modules.populateData();
+  users.populateData();
+}
 
-users.populateData(data["users"]);
-modules.populateData(data["modules"]);
-books.populateData(data["books"]);
+init();
+console.log(books);
+console.log(modules);
+console.log(users);
 
-console.log(books.booksFromModule("5021").booksWithStatus("good"));
-console.log(books.booksFromModule("5025").incrementPriceOfbooks(0.1));
+searches();
+
+async function searches() {
+  console.log(await users.getUserById(3));
+
+  console.log("TAREAS");
+  console.log(await books.booksFromUser(4));
+  const booksFromModule5021 = await books.booksFromModule("5021");
+  console.log(await booksFromModule5021.booksWithStatus("good"));
+  const booksFromModule5025 = await books.booksFromModule("5025");
+  console.log(await booksFromModule5025.incrementPriceOfbooks(1));
+}

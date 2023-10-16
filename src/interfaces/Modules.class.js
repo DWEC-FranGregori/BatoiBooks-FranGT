@@ -1,10 +1,7 @@
 export default class Modules {
-  constructor(data) {}
-  populateData() {}
-  addItem() {}
-  removeItem() {}
-  getItemByCode() {}
-  toString() {}
+  getAllModules() {}
   getModuleByCode(code) {}
-  getModuleIndexByCode(code) {}
+  addModule(module) {}
+  removeModule(code) {}
+  changeModule(module, newModule) {}
 }

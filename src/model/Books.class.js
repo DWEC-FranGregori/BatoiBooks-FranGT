@@ -1,173 +1,113 @@
-import Book from "./Book.class";
+import Book from "./book.class";
 
-const VACIO = "";
-const APUNTES = "Apunts";
-const ESTADOS = ["bad", "good", "new"];
-const MIN_PERCENTAJE_TO_INCREMENT = 0.01;
-const MAX_PERCENTAJE_TO_INCREMENT = 0.99;
+import BooksRepository from "../repositories/books.repositories";
+const repository = new BooksRepository();
+
+const NOTES = "Apunts";
 
 export default class Books {
   constructor() {
     this.data = [];
   }
 
-  populateData(arrayBooks) {
-    arrayBooks.forEach((book) => {
-      this.data.push(new Book(book));
-    });
+  async getBookById(id) {
+    await repository.getBookById(id);
+    return this.data.find((item) => item.id === id) || {};
   }
 
-  addItem(book) {
-    let newBook = new Book(book);
-    newBook.id = this.getLastId() + 1;
+  async populateData() {
+    this.data = await repository.getAllBooks();
+  }
+
+  async addItem(payload) {
+    await repository.addBook(payload);
+    payload.id = getNextId(this.data);
+    const newBook = new Book(payload);
     this.data.push(newBook);
     return newBook;
   }
 
-  removeItem(id) {
-    const itemToRemove = this.getItemById(id);
-    if (itemToRemove === -1) {
-      throw new Error("Id no encontrado");
+  async removeItem(id) {
+    await repository.removeBook(id);
+    const index = this.data.findIndex((item) => item.id === id);
+    if (index === -1) {
+      throw "No existe un libro con id " + id;
     }
-
-    this.data = this.data.filter(function (book) {
-      return book.id !== id;
-    });
+    this.data.splice(index, 1);
     return {};
   }
 
-  getItemById(id) {
-    return new Book(this.data.find((book) => book.id === id));
+  toString() {
+    let booksToString = `Libros (total ${this.data.length})`;
+    this.data.forEach(
+      (item) =>
+        (booksToString += `
+    - ${item}`)
+    );
+    return booksToString;
   }
 
-  booksFromUser(idUser) {
-    const newBooks = new Books();
-    const booksFiltrered = this.data.filter((value) => value.idUser === idUser);
-    newBooks.populateData(booksFiltrered);
-    return newBooks;
+  async booksFromUser(userId) {
+    await repository.getBooksFromUser(userId);
+    const filteredBooks = new Books();
+    filteredBooks.data = this.data.filter((item) => item.idUser === userId);
+    return filteredBooks;
   }
 
-  booksFromModule(module) {
-    const newBooks = new Books();
-    const booksFiltrered = this.data.filter((book) => book.idModule === module);
-    newBooks.populateData(booksFiltrered);
-    return newBooks;
+  async booksFromModule(moduleId) {
+    await repository.getBooksFromModule(moduleId);
+    const filteredBooks = new Books();
+    filteredBooks.data = this.data.filter((item) => item.idModule === moduleId);
+    return filteredBooks;
   }
 
   booksCheeperThan(price) {
-    const newBooks = new Books();
-    const booksFiltrered = this.data.filter((book) => book.price <= price);
-    newBooks.populateData(booksFiltrered);
-    return newBooks;
+    const filteredBooks = new Books();
+    filteredBooks.data = this.data.filter((item) => item.price <= price);
+    return filteredBooks;
   }
 
-  booksWithStatus(status) {
-    const newBooks = new Books();
-    if (!isArrayAndContainsInfo(this.data)) {
-      return newBooks;
-    }
-
-    if (!ESTADOS.includes(status)) {
-      return newBooks;
-    }
-
-    const booksFiltrered = this.data.filter((book) => book.status === status);
-    newBooks.populateData(booksFiltrered);
-    return newBooks;
+  async booksWithStatus(status) {
+    await repository.getBooksWithStatus(status);
+    const filteredBooks = new Books();
+    filteredBooks.data = this.data.filter((item) => item.status === status);
+    return filteredBooks;
   }
 
   averagePriceOfBooks() {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return "0.00 €";
-    }
-
-    return (
-      (
-        this.data.reduce((total, book) => (total += book.price), 0) /
-        this.data.length
-      ).toFixed(2) + " €"
-    );
+    const sum = this.data.reduce((total, item) => total + item.price, 0);
+    return this.data.length
+      ? (sum / this.data.length).toFixed(2) + " €"
+      : "0 €";
   }
 
   booksOfTypeNote() {
-    const newBooks = new Books();
-    if (!isArrayAndContainsInfo(this.data)) {
-      return newBooks;
-    }
-
-    const booksFiltrered = this.data.filter(
-      (book) => book.publisher === APUNTES
-    );
-
-    newBooks.populateData(booksFiltrered);
-    return newBooks;
+    const filteredBooks = new Books();
+    filteredBooks.data = this.data.filter((item) => item.publisher === NOTES);
+    return filteredBooks;
   }
 
   booksNotOfTypeNote() {
-    const booksFiltrered = this.data.filter(
-      (book) => book.publisher !== APUNTES
-    );
-    const newBooks = new Books();
-    newBooks.populateData(booksFiltrered);
-    return newBooks;
+    const filteredBooks = new Books();
+    filteredBooks.data = this.data.filter((item) => item.publisher !== NOTES);
+    return filteredBooks;
   }
 
   booksNotSold() {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return [];
-    }
-    return new Books(this.data.filter((book) => book.soldDate === VACIO));
+    const filteredBooks = new Books();
+    filteredBooks.data = this.data.filter((item) => !item.soldDate);
+    return filteredBooks;
   }
 
-  incrementPriceOfbooks(percentajeToIncrement) {
-    if (!isArrayAndContainsInfo(this.data)) {
-      return;
-    }
-
-    if (!isValidPercentaje(percentajeToIncrement)) {
-      return;
-    }
-    return this.data.map(
-      (book) => (book.price += book.price * percentajeToIncrement)
-    );
-  }
-
-  toString() {
-    return `El libro con id ${this.data.id} está en estado: ${this.data.status} y pertenece al módulo ${this.data.module}`;
-  }
-
-  getLastId() {
-    if (this.data.length === 0) {
-      return 0;
-    }
-    return this.data.reduce((maxId, book) => Math.max(maxId, book.id), 0);
+  async incrementPriceOfbooks(increment) {
+    await repository.incrementPriceOfBooks(increment);
+    return this.data.map((item) => {
+      item.price = item.price + item.price * increment;
+      return item;
+    });
   }
 }
 
-function isValidId(idUser) {
-  return isNumber(idUser) && isPositive(idUser);
-}
-
-function isValidPrice(price) {
-  return isNumber(price) && isPositive(price);
-}
-
-function isNumber(number) {
-  return !Number.isNaN(number);
-}
-
-function isPositive(number) {
-  return number >= 0;
-}
-
-function isValidPercentaje(percentajeToIncrement) {
-  return (
-    isNumber(percentajeToIncrement) &&
-    percentajeToIncrement >= MIN_PERCENTAJE_TO_INCREMENT &&
-    percentajeToIncrement <= MAX_PERCENTAJE_TO_INCREMENT
-  );
-}
-
-function isArrayAndContainsInfo(array) {
-  return Array.isArray(array) && array.length;
+function getNextId(data) {
+  return data.reduce((max, item) => (item.id > max ? item.id : max), 0) + 1;
 }
