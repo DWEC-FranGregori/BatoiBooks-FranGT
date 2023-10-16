@@ -74,11 +74,11 @@ export default class BooksRepository {
     return data;
   }
 
-  async changeBook(book, newBook) {
+  async changeBook(book) {
     const response = await fetch(SERVER + `/books/${book.id}`, {
       method: "PUT", // or 'PATCH'
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newBook),
+      body: JSON.stringify(book),
     });
     return response.json();
   }
@@ -87,7 +87,7 @@ export default class BooksRepository {
     const response = await fetch(SERVER + `/books?${price}`, {
       method: "PATCH", // or 'PUT'
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(price),
+      body: JSON.stringify({ price: price }),
     });
     return response.json();
   }
@@ -96,7 +96,7 @@ export default class BooksRepository {
     const response = await fetch(SERVER + `/books/${id}`, {
       method: "PATCH", // or 'PUT'
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(price),
+      body: JSON.stringify({ price: price }),
     });
     return response.json();
   }

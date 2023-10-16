@@ -47,11 +47,11 @@ export default class UsersRepository {
     return data;
   }
 
-  async changeUser(user, newUser) {
+  async changeUser(user) {
     const response = await fetch(SERVER + `/users/${user.id}`, {
       method: "PUT", // or 'PATCH'
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUser),
+      body: JSON.stringify(user),
     });
     return response.json();
   }
@@ -60,7 +60,7 @@ export default class UsersRepository {
     const response = await fetch(SERVER + `/users/${id}`, {
       method: "PATCH", // or 'PUT'
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(password),
+      body: JSON.stringify({ password: password }),
     });
     return response.json();
   }

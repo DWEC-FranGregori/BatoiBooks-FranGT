@@ -12,10 +12,10 @@ export default class ModulesRepository {
     return data;
   }
 
-  async getBookByCode(code) {
-    const reponse = await fetch(SERVER + `/modules/${code}`);
-    if (!reponse.ok) {
-      throw `Error ${reponse.status} de la BBDD: ${reponse.statusText}`;
+  async getModuleById(id) {
+    const response = await fetch(SERVER + `/modules/${id}`);
+    if (!response.ok) {
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
     const data = await response.json();
     return data;
@@ -47,11 +47,11 @@ export default class ModulesRepository {
     return data;
   }
 
-  async changeModule(module, newModule) {
-    const response = await fetch(SERVER + `/modules/${module.code}`, {
+  async changeModule(module) {
+    const response = await fetch(SERVER + `/modules/${module.id}`, {
       method: "PUT", // or 'PATCH'
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newModule),
+      body: JSON.stringify(module),
     });
     return response.json();
   }
