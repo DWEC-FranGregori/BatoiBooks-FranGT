@@ -47,6 +47,8 @@ export default class BooksRepository {
     const data = await response.json();
     return data;
   }
+  //PATCH solo datos a modificar
+  //PUT todo el objeto, con los datos modificados y los datos sin modificar
 
   async addBook(book) {
     const response = await fetch(SERVER + "/books", {
@@ -83,11 +85,11 @@ export default class BooksRepository {
     return response.json();
   }
 
-  async incrementPriceOfBooks(price) {
-    const response = await fetch(SERVER + `/books?${price}`, {
+  async incrementPriceOfBooks(newPrice) {
+    const response = await fetch(SERVER + `/books?${newPrice}`, {
       method: "PATCH", // or 'PUT'
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ price: price }),
+      body: JSON.stringify({ price: (newPrice + 1) * books.price }),
     });
     return response.json();
   }

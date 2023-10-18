@@ -1,7 +1,6 @@
 import Book from "./book.class";
 
 import BooksRepository from "../repositories/books.repositories";
-const repository = new BooksRepository();
 
 const NOTES = "Apunts";
 
@@ -16,15 +15,16 @@ export default class Books {
   }
 
   async populateData() {
-    this.data = await repository.getAllBooks();
+    const repositoryBook = new BooksRepository();
+    const books = await repositoryBook.getAllBooks();
+    this.data = books.map((book) => new Book(book));
   }
 
-  async addItem(payload) {
-    await repository.addBook(payload);
-    payload.id = getNextId(this.data);
-    const newBook = new Book(payload);
-    this.data.push(newBook);
-    return newBook;
+  async addItem(book) {
+    const repositoryBook = new BooksRepository();
+    await repositoryBook.addBook(book);
+    this.data.push(new Book(book));
+    return new Book(book);
   }
 
   async removeItem(id) {
