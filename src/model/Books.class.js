@@ -7,28 +7,27 @@ const NOTES = "Apunts";
 export default class Books {
   constructor() {
     this.data = [];
+    this.booksRepository = new BooksRepository();
   }
 
   async getBookById(id) {
-    await repository.getBookById(id);
+    await this.booksRepository.getBookById(id);
     return this.data.find((item) => item.id === id) || {};
   }
 
   async populateData() {
-    const repositoryBook = new BooksRepository();
-    const books = await repositoryBook.getAllBooks();
+    const books = await this.booksRepository.getAllBooks();
     this.data = books.map((book) => new Book(book));
   }
 
   async addItem(book) {
-    const repositoryBook = new BooksRepository();
-    await repositoryBook.addBook(book);
+    await this.booksRepository.addBook(book);
     this.data.push(new Book(book));
     return new Book(book);
   }
 
   async removeItem(id) {
-    await repository.removeBook(id);
+    await this.booksRepository.removeBook(id);
     const index = this.data.findIndex((item) => item.id === id);
     if (index === -1) {
       throw "No existe un libro con id " + id;
@@ -47,15 +46,13 @@ export default class Books {
     return booksToString;
   }
 
-  async booksFromUser(userId) {
-    await repository.getBooksFromUser(userId);
+  booksFromUser(userId) {
     const filteredBooks = new Books();
     filteredBooks.data = this.data.filter((item) => item.idUser === userId);
     return filteredBooks;
   }
 
-  async booksFromModule(moduleId) {
-    await repository.getBooksFromModule(moduleId);
+  booksFromModule(moduleId) {
     const filteredBooks = new Books();
     filteredBooks.data = this.data.filter((item) => item.idModule === moduleId);
     return filteredBooks;
@@ -67,8 +64,7 @@ export default class Books {
     return filteredBooks;
   }
 
-  async booksWithStatus(status) {
-    await repository.getBooksWithStatus(status);
+  booksWithStatus(status) {
     const filteredBooks = new Books();
     filteredBooks.data = this.data.filter((item) => item.status === status);
     return filteredBooks;

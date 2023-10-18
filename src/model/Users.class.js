@@ -1,24 +1,27 @@
 import User from "./user.class";
 
 import UsersRepository from "../repositories/users.repositories";
-const repository = new UsersRepository();
 
 export default class Users {
   constructor() {
     this.data = [];
-  }
-
-  async getUserById(id) {
-    await repository.getUserById(id);
-    return this.data.find((item) => item.id === id) || {};
+    this.usersRepository = new UsersRepository();
   }
 
   async populateData() {
-    this.data = await repository.getAllUsers();
+    const usersFromRepository = await this.usersRepository.getAllUsers();
+    this.data = usersFromRepository.map(
+      (user) => new User(user.id, user.email, user.nick, user.password)
+    );
+  }
+
+  async getUserById(id) {
+    await this.usersRepository.getUserById(id);
+    return this.data.find((item) => item.id === id) || {};
   }
 
   async addItem(payload) {
-    await repository.addUser(payload);
+    await thiis.usersRepository.addUser(payload);
     const newUser = new User(
       getNextId(this.data),
       payload.email,
@@ -30,7 +33,7 @@ export default class Users {
   }
 
   async removeItem(id) {
-    await repository.removeUser(id);
+    await this.usersRepository.removeUser(id);
     const index = this.data.findIndex((item) => item.id === id);
     if (index === -1) {
       throw "No existe un usuario con id " + id;

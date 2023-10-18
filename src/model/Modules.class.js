@@ -1,24 +1,33 @@
 import Module from "./module.class";
 
 import ModuleRepository from "../repositories/modules.repositories";
-const repository = new ModuleRepository();
 
 export default class Modules {
   constructor() {
     this.data = [];
-  }
-
-  async getModuleByCode(code) {
-    await repository.getModuleByCode(code);
-    return this.data.find((item) => item.code === code) || {};
+    this.moduleRepository = new ModuleRepository();
   }
 
   async populateData() {
-    this.data = await repository.getAllModules();
+    const modulesFromRepository = await this.moduleRepository.getAllModules();
+    this.data = modulesFromRepository.map(
+      (module) =>
+        new Module(
+          module.code,
+          module.cliteral,
+          module.vliteral,
+          module.idCourse
+        )
+    );
+  }
+
+  async getModuleByCode(code) {
+    await this.moduleRepository.getModuleByCode(code);
+    return this.data.find((item) => item.code === code) || {};
   }
 
   async addItem(payload) {
-    await repository.addModule(payload);
+    await this.moduleRepository.addModule(payload);
     const newModule = new Module(
       payload.code,
       payload.cliteral,
@@ -30,7 +39,7 @@ export default class Modules {
   }
 
   async removeItem(code) {
-    await repository.removeModule(code);
+    await this.moduleRepository.removeModule(code);
     const index = this.data.findIndex((item) => item.code === code);
     if (index === -1) {
       throw "No existe un módulo con código " + code;
