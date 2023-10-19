@@ -95,15 +95,21 @@ export default class Books {
     return filteredBooks;
   }
 
-  async incrementPriceOfbooks(increment) {
-    await repository.incrementPriceOfBooks(increment);
+  updatePriceOfBook(id, price) {
     return this.data.map((item) => {
-      item.price = item.price + item.price * increment;
+      if (item.id === id) {
+        item.price = (price + 1) * item.price;
+      }
       return item;
     });
   }
-}
 
-function getNextId(data) {
-  return data.reduce((max, item) => (item.id > max ? item.id : max), 0) + 1;
+  async incrementPriceOfbooks(increment) {
+    return this.data.map((item) => {
+      item = this.booksRepository.updatePriceOfBook(
+        item.id,
+        item.price * (1 + increment)
+      );
+    });
+  }
 }

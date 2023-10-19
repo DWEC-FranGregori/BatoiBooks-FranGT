@@ -21,7 +21,7 @@ export default class Users {
   }
 
   async addItem(payload) {
-    await thiis.usersRepository.addUser(payload);
+    await this.usersRepository.addUser(payload);
     const newUser = new User(
       getNextId(this.data),
       payload.email,
