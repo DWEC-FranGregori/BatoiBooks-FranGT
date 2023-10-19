@@ -108,7 +108,7 @@ export default class Books {
     return this.data.map((item) => {
       item = this.booksRepository.updatePriceOfBook(
         item.id,
-        item.price * (1 + increment)
+        (item.price = (item.price * (1 + increment)).toFixed(2))
       );
     });
   }

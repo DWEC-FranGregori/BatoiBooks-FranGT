@@ -40,5 +40,6 @@ async function searches() {
   const booksFromModule5021 = books.booksFromModule("5021");
   console.log(booksFromModule5021.booksWithStatus("good"));
   const booksFromModule5025 = books.booksFromModule("5025");
-  console.log(await booksFromModule5025.incrementPriceOfbooks(0.1));
+  await booksFromModule5025.incrementPriceOfbooks(0.1);
+  console.log(booksFromModule5025);
 }
