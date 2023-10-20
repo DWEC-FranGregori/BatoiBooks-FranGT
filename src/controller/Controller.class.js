@@ -34,5 +34,6 @@ export default class Controller {
 
   render() {
     this.view.renderOptionsModule(this.modules);
+    this.view.renderAllBooks(this.books);
   }
 }

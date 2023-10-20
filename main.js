@@ -17,10 +17,8 @@ document.querySelector("#app").innerHTML = `
   </nav>
   <div id="messages">
   </div>
-  <div>
-    <div id="list">
-    //pinto libros
-    </div>
+  <div id="list">
+  </div>
     <div id="form">
       <button id="remove">Borrar libro</button>
       <form id="bookForm">
