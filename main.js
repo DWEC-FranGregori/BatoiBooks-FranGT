@@ -1,12 +1,12 @@
 import "./style.css";
 import batoiLogo from "/logoBatoi.png";
 import Books from "./src/model/books.class";
-import Users from "./src/model/users.class";
 import Modules from "./src/model/modules.class";
+import Users from "./src/model/users.class";
 
-const books = new Books();
-const modules = new Modules();
 const users = new Users();
+const modules = new Modules();
+const books = new Books();
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -19,27 +19,17 @@ document.querySelector("#app").innerHTML = `
   </div>
 `;
 
-function init() {
-  books.populateData();
-  modules.populateData();
-  users.populateData();
+async function init() {
+  await Promise.all([
+    users.populateData(),
+    modules.populateData(),
+    books.populateData(),
+  ]);
+
+  console.log(books.booksFromUser(4));
+  console.log(books.booksFromModule("5021").booksWithStatus("good"));
+  books.booksFromModule("5025").incrementPriceOfbooks(0.1);
+  console.log(books.booksFromModule("5025"));
 }
 
 init();
-console.log(books);
-console.log(modules);
-console.log(users);
-
-searches();
-
-async function searches() {
-  console.log(await users.getUserById(3));
-
-  console.log("TAREAS");
-  console.log(books.booksFromUser(4));
-  const booksFromModule5021 = books.booksFromModule("5021");
-  console.log(booksFromModule5021.booksWithStatus("good"));
-  const booksFromModule5025 = books.booksFromModule("5025");
-  await booksFromModule5025.incrementPriceOfbooks(0.1);
-  console.log(booksFromModule5025);
-}

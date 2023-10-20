@@ -1,37 +1,37 @@
 import Book from "./book.class";
-
-import BooksRepository from "../repositories/books.repositories";
+import BooksRepository from "../repositories/books.repository";
 
 const NOTES = "Apunts";
 
 export default class Books {
   constructor() {
     this.data = [];
-    this.booksRepository = new BooksRepository();
   }
 
-  async getBookById(id) {
-    await this.booksRepository.getBookById(id);
+  getBookById(id) {
     return this.data.find((item) => item.id === id) || {};
   }
 
   async populateData() {
-    const books = await this.booksRepository.getAllBooks();
-    this.data = books.map((book) => new Book(book));
+    const repository = new BooksRepository();
+    const books = await repository.getAllBooks();
+    this.data = books.map((item) => new Book(item));
   }
 
-  async addItem(book) {
-    await this.booksRepository.addBook(book);
-    this.data.push(new Book(book));
-    return new Book(book);
+  async addItem(payload) {
+    const repository = new BooksRepository();
+    const book = await repository.addBook(payload);
+    const newBook = new Book(book);
+    this.data.push(newBook);
+    return newBook;
   }
 
   async removeItem(id) {
-    await this.booksRepository.removeBook(id);
+    const repository = new BooksRepository();
+    await repository.removeBook(id);
     const index = this.data.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw "No existe un libro con id " + id;
-    }
+    // No necesitamos comprobar si devuelve -1 porque si no existe
+    // el repositorio habrá lanzado un error que interrumpirá la fn
     this.data.splice(index, 1);
     return {};
   }
@@ -95,21 +95,16 @@ export default class Books {
     return filteredBooks;
   }
 
-  updatePriceOfBook(id, price) {
-    return this.data.map((item) => {
-      if (item.id === id) {
-        item.price = (price + 1) * item.price;
-      }
-      return item;
-    });
-  }
-
-  async incrementPriceOfbooks(increment) {
-    return this.data.map((item) => {
-      item = this.booksRepository.updatePriceOfBook(
-        item.id,
-        (item.price = (item.price * (1 + increment)).toFixed(2))
+  incrementPriceOfbooks(increment) {
+    const repository = new BooksRepository();
+    this.data.forEach(async (book) => {
+      const newPrice = book.price * (1 + increment);
+      const roundedPrice = Math.round(newPrice * 100) / 100;
+      const bookChanged = await repository.updatePriceOfBook(
+        book.id,
+        roundedPrice
       );
+      book.price = bookChanged.price;
     });
   }
 }

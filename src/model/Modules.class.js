@@ -1,51 +1,49 @@
 import Module from "./module.class";
-
-import ModuleRepository from "../repositories/modules.repositories";
+import ModulesRepository from "../repositories/modules.repository";
 
 export default class Modules {
   constructor() {
     this.data = [];
-    this.moduleRepository = new ModuleRepository();
   }
 
   async populateData() {
-    const modulesFromRepository = await this.moduleRepository.getAllModules();
-    this.data = modulesFromRepository.map(
-      (module) =>
-        new Module(
-          module.code,
-          module.cliteral,
-          module.vliteral,
-          module.idCourse
-        )
+    const repository = new ModulesRepository();
+    const modules = await repository.getAllModules();
+    this.data = modules.map(
+      (item) =>
+        new Module(item.code, item.cliteral, item.vliteral, item.idCourse)
     );
   }
 
-  async getModuleByCode(code) {
-    await this.moduleRepository.getModuleByCode(code);
-    return this.data.find((item) => item.code === code) || {};
-  }
-
   async addItem(payload) {
-    await this.moduleRepository.addModule(payload);
+    const repository = new ModulesRepository();
+    const module = await repository.addModule(payload);
     const newModule = new Module(
-      payload.code,
-      payload.cliteral,
-      payload.vliteral,
-      payload.idCourse
+      module.code,
+      module.cliteral,
+      module.vliteral,
+      module.idCourse
     );
     this.data.push(newModule);
     return newModule;
   }
 
   async removeItem(code) {
-    await this.moduleRepository.removeModule(code);
-    const index = this.data.findIndex((item) => item.code === code);
-    if (index === -1) {
-      throw "No existe un módulo con código " + code;
-    }
+    const repository = new ModulesRepository();
+    await repository.removeModule(code);
+    const index = this.getModuleIndexByCode(code);
+    // No necesitamos comprobar si devuelve -1 porque si no existe
+    // el repositorio habrá lanzado un error que interrumpirá la fn
     this.data.splice(index, 1);
     return {};
+  }
+
+  getModuleByCode(code) {
+    return this.data.find((item) => item.code === code) || {};
+  }
+
+  getModuleIndexByCode(code) {
+    return this.data.findIndex((item) => item.code === code);
   }
 
   toString() {

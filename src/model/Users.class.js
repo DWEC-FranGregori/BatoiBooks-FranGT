@@ -1,43 +1,33 @@
 import User from "./user.class";
-
-import UsersRepository from "../repositories/users.repositories";
+import UsersRepository from "../repositories/users.repository";
 
 export default class Users {
   constructor() {
     this.data = [];
-    this.usersRepository = new UsersRepository();
   }
 
   async populateData() {
-    const usersFromRepository = await this.usersRepository.getAllUsers();
-    this.data = usersFromRepository.map(
-      (user) => new User(user.id, user.email, user.nick, user.password)
+    const repository = new UsersRepository();
+    const users = await repository.getAllUsers();
+    this.data = users.map(
+      (item) => new User(item.id, item.email, item.nick, item.password)
     );
-  }
-
-  async getUserById(id) {
-    await this.usersRepository.getUserById(id);
-    return this.data.find((item) => item.id === id) || {};
   }
 
   async addItem(payload) {
-    await this.usersRepository.addUser(payload);
-    const newUser = new User(
-      getNextId(this.data),
-      payload.email,
-      payload.nick,
-      payload.password
-    );
+    const repository = new UsersRepository();
+    const user = await repository.addUser(payload);
+    const newUser = new User(user.id, user.email, user.nick, user.password);
     this.data.push(newUser);
     return newUser;
   }
 
   async removeItem(id) {
-    await this.usersRepository.removeUser(id);
-    const index = this.data.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw "No existe un usuario con id " + id;
-    }
+    const repository = new UsersRepository();
+    await repository.removeUser(id);
+    const index = this.getUserIndexById(id);
+    // No necesitamos comprobar si devuelve -1 porque si no existe
+    // el repositorio habrá lanzado un error que interrumpirá la fn
     this.data.splice(index, 1);
     return {};
   }
@@ -52,11 +42,15 @@ export default class Users {
     return usersToString;
   }
 
+  getUserById(id) {
+    return this.data.find((item) => item.id === id) || {};
+  }
+
+  getUserIndexById(id) {
+    return this.data.findIndex((item) => item.id === id);
+  }
+
   getUserByNick(nick) {
     return this.data.find((item) => item.nick === nick) || {};
   }
-}
-
-function getNextId(data) {
-  return data.reduce((max, item) => (item.id > max ? item.id : max), 0) + 1;
 }
