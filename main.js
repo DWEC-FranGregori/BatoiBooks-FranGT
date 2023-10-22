@@ -24,7 +24,7 @@ document.querySelector("#app").innerHTML = `
       <form id="bookForm">
         <div>
           <label for="id-module">Módulo:</label>
-          <select id="id-module">
+          <select id="id-module" required>
             <option>- Selecciona un módulo -</option>
           </select><br>
         </div>
@@ -36,7 +36,7 @@ document.querySelector("#app").innerHTML = `
 
         <div>
           <label for="price">Precio:</label>
-          <input type="number" id="price"><br>
+          <input type="number" id="price" required><br>
         </div>
 
         <div>
@@ -46,7 +46,9 @@ document.querySelector("#app").innerHTML = `
 
         <div>
           <label>Estado:</label>
-          <!-- Aquí poned un radiobutton para cada estado -->
+          <input type="radio" name="status" value="new">new
+          <input type="radio" name="status" value="good">good
+          <input type="radio" name="status" value="bad">bad
         </div>
 
         <div>

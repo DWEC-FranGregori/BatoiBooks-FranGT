@@ -1,7 +1,7 @@
 export default class View {
   constructor() {
     this.list = document.getElementById("list");
-    this.form = document.getElementById("form");
+    this.bookForm = document.getElementById("form");
     this.about = document.getElementById("about");
     this.messages = document.getElementById("messages");
   }

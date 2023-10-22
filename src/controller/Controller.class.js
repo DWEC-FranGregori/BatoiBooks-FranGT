@@ -35,5 +35,18 @@ export default class Controller {
   render() {
     this.view.renderOptionsModule(this.modules);
     this.view.renderAllBooks(this.books);
+    this.view.bookForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const idModule = document.getElementById("id-module").value;
+      const publisher = document.getElementById("publisher").value;
+      const price = document.getElementById("price").value;
+      const pages = document.getElementById("pages").value;
+      const comments = document.getElementById("comments").value;
+      // Aquí poned el código que
+      // - cogerá los datos del formulario
+      // - los validará
+      // - pedirá al modelo que añada ese libro
+      // - una vez hecho lo añadirá a la vista y borrará el formulario
+    });
   }
 }
