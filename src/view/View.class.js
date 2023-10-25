@@ -5,6 +5,7 @@ export default class View {
     this.bookForm = document.getElementById("bookForm");
     this.about = document.getElementById("about");
     this.messages = document.getElementById("messages");
+    this.remove = document.getElementById("remove");
   }
 
   renderOptionsModule(modules) {
@@ -59,9 +60,8 @@ export default class View {
     DOMSelector.appendChild(newCardClass);
   }
 
-  renderDeleteBook(bookId) {
-    const DOMBook = document.getElementById(`book-${bookId}`);
-    DOMBook.parentElement.removeChild(DOMBook);
+  renderDeleteBook() {
+    this.renderAllBooks();
   }
 
   renderMessage(type, message) {

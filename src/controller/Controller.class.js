@@ -17,6 +17,7 @@ export default class Controller {
     await this.modules.populateData();
     await this.books.populateData();
     this.render();
+    this.removeBook();
   }
   removeBook() {
     this.view.remove.addEventListener("click", async (event) => {
@@ -27,7 +28,7 @@ export default class Controller {
         this.view.renderMessage("error", error.message);
         return;
       }
-      this.view.renderDeleteBook(bookId);
+      this.view.renderDeleteBook();
     });
   }
 

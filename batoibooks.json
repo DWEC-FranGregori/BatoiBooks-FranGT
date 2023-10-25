@@ -1984,27 +1984,15 @@
     },
     {
       "idUser": 2,
-      "idModule": "0017",
+      "idModule": "0016",
       "publisher": "SL",
-      "price": "32",
-      "pages": "483",
+      "price": "43",
+      "pages": "234",
       "comments": "",
       "photo": "",
       "soldDate": "",
       "status": "",
       "id": 15
-    },
-    {
-      "idUser": 2,
-      "idModule": "0022",
-      "publisher": "SL",
-      "price": "1",
-      "pages": "23",
-      "comments": "",
-      "photo": "",
-      "soldDate": "",
-      "status": "",
-      "id": 16
     }
   ]
 }
