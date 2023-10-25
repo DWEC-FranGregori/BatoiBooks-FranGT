@@ -1933,6 +1933,78 @@
       "comments": "",
       "soldDate": "",
       "id": 10
+    },
+    {
+      "idUser": 2,
+      "idModule": "0015",
+      "publisher": "SL",
+      "price": "39",
+      "pages": "273",
+      "comments": "",
+      "photo": "",
+      "soldDate": "",
+      "status": "",
+      "id": 11
+    },
+    {
+      "idUser": 2,
+      "idModule": "0013",
+      "publisher": "SL",
+      "price": "7",
+      "pages": "189",
+      "comments": "",
+      "photo": "",
+      "soldDate": "",
+      "status": "",
+      "id": 12
+    },
+    {
+      "idUser": 2,
+      "idModule": "0016",
+      "publisher": "SL",
+      "price": "43",
+      "pages": "4343",
+      "comments": "",
+      "photo": "",
+      "soldDate": "",
+      "status": "",
+      "id": 13
+    },
+    {
+      "idUser": 2,
+      "idModule": "0018",
+      "publisher": "SL",
+      "price": "384",
+      "pages": "34",
+      "comments": "",
+      "photo": "",
+      "soldDate": "",
+      "status": "",
+      "id": 14
+    },
+    {
+      "idUser": 2,
+      "idModule": "0017",
+      "publisher": "SL",
+      "price": "32",
+      "pages": "483",
+      "comments": "",
+      "photo": "",
+      "soldDate": "",
+      "status": "",
+      "id": 15
+    },
+    {
+      "idUser": 2,
+      "idModule": "0022",
+      "publisher": "SL",
+      "price": "1",
+      "pages": "23",
+      "comments": "",
+      "photo": "",
+      "soldDate": "",
+      "status": "",
+      "id": 16
     }
   ]
 }

@@ -18,7 +18,7 @@ export default class Controller {
     await this.books.populateData();
     this.render();
   }
-  /*
+  removeBook() {
     this.view.remove.addEventListener("click", async (event) => {
       const bookId = prompt("Introduzce una id de la libro a borrar");
       try {
@@ -30,23 +30,33 @@ export default class Controller {
       this.view.renderDeleteBook(bookId);
     });
   }
-  */
 
   render() {
     this.view.renderOptionsModule(this.modules);
     this.view.renderAllBooks(this.books);
-    this.view.bookForm.addEventListener("submit", (event) => {
+
+    this.view.form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const idModule = document.getElementById("id-module").value;
       const publisher = document.getElementById("publisher").value;
       const price = document.getElementById("price").value;
       const pages = document.getElementById("pages").value;
       const comments = document.getElementById("comments").value;
-      // Aquí poned el código que
-      // - cogerá los datos del formulario
-      // - los validará
-      // - pedirá al modelo que añada ese libro
-      // - una vez hecho lo añadirá a la vista y borrará el formulario
+
+      const book = await this.books.addItem({
+        idUser: 2,
+        idModule,
+        publisher,
+        price,
+        pages,
+        comments,
+        photo: "",
+        soldDate: "",
+        status: "",
+      });
+
+      this.view.renderBook(book);
+      this.view.clearForm();
     });
   }
 }

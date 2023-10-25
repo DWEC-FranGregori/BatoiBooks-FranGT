@@ -1,7 +1,8 @@
 export default class View {
   constructor() {
     this.list = document.getElementById("list");
-    this.bookForm = document.getElementById("form");
+    this.form = document.getElementById("form");
+    this.bookForm = document.getElementById("bookForm");
     this.about = document.getElementById("about");
     this.messages = document.getElementById("messages");
   }
@@ -22,6 +23,7 @@ export default class View {
       this.renderBook(book);
     });
   }
+
   renderBook(book) {
     const DOMSelector = document.getElementById("list");
     const newCardClass = document.createElement("div");
@@ -37,7 +39,7 @@ export default class View {
     const price = document.createElement("p");
     price.textContent = `Precio : ${book.price}`;
     const pages = document.createElement("p");
-    pages.textContent = book.pages;
+    pages.textContent = `Páginas : ${book.pages}`;
     const status = document.createElement("p");
     status.textContent = `Estado : ${book.status}`;
     const soldDate = document.createElement("p");
@@ -70,5 +72,9 @@ export default class View {
     DOMNEWMEssage.className = `${type} alert alert-danger alert-dismissible" role="alert"`;
     DOMNEWMEssage.setAttribute("role", "alert");
     this.messages.appendChild(DOMNEWMEssage);
+  }
+
+  clearForm() {
+    this.bookForm.reset();
   }
 }
