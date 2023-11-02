@@ -1,80 +1,78 @@
-export default class View {
+export default class View{
   constructor() {
-    this.list = document.getElementById("list");
-    this.form = document.getElementById("form");
-    this.bookForm = document.getElementById("bookForm");
-    this.about = document.getElementById("about");
-    this.messages = document.getElementById("messages");
-    this.remove = document.getElementById("remove");
-  }
-
-  renderOptionsModule(modules) {
-    const DOMSelector = document.getElementById("id-module");
-    modules.data.forEach((module) => {
-      const DOMOptions = document.createElement("option");
-      DOMOptions.textContent = module.cliteral;
-      DOMOptions.value = module.code;
-      // DOMOptions.setAttribute("value", module.code);
-      DOMSelector.appendChild(DOMOptions);
-    });
-  }
-
-  renderAllBooks(books) {
-    books.data.forEach((book) => {
-      this.renderBook(book);
-    });
+    this.list = document.getElementById('list')
+    this.about = document.getElementById('about')
+    this.form = document.getElementById('form')
+    this.remove = document.getElementById('remove')
+    this.bookForm = document.getElementById('bookForm')
+    this.messages = document.getElementById('messages')
   }
 
   renderBook(book) {
-    const DOMSelector = document.getElementById("list");
-    const newCardClass = document.createElement("div");
-    newCardClass.className = "card";
-    DOMSelector.appendChild(newCardClass);
-
-    const photo = document.createElement("img");
-    photo.src = book.photo;
-    const idModule = document.createElement("h5");
-    idModule.textContent = book.idModule;
-    const publisher = document.createElement("h6");
-    publisher.textContent = book.publisher;
-    const price = document.createElement("p");
-    price.textContent = `Precio : ${book.price}`;
-    const pages = document.createElement("p");
-    pages.textContent = `Páginas : ${book.pages}`;
-    const status = document.createElement("p");
-    status.textContent = `Estado : ${book.status}`;
-    const soldDate = document.createElement("p");
-    soldDate.textContent = `Vendido el ${book.soldDate}`;
-    const comments = document.createElement("p");
-    comments.textContent = `Comentarios : ${book.comments}`;
-
-    newCardClass.appendChild(photo);
-    newCardClass.appendChild(idModule);
-    newCardClass.appendChild(publisher);
-    newCardClass.appendChild(price);
-    newCardClass.appendChild(pages);
-    newCardClass.appendChild(status);
-    newCardClass.appendChild(soldDate);
-    newCardClass.appendChild(comments);
-
-    DOMSelector.appendChild(newCardClass);
+    const bookUI = document.createElement('div')
+    bookUI.id = 'book-'+book.id
+    bookUI.className = 'card'
+    bookUI.innerHTML = `
+    <img src="${book.photo}" alt="Lbro: ${book.id}">
+      <div>
+        <h5>${book.idModule + ' (' + book.id +')'}</h5>
+        <h6>${book.publisher}</h6>
+        <p>Precio: ${book.price.toFixed(2)} €</p>
+        <p>Páginas: ${book.pages}</p>
+        <p>Estado: ${book.status}</p>
+        <p>${book.soldDate?'Vendido el ' + book.soldDate:'En venta'}</p>
+        <p>Comentarios: ${book.comments || ''}</p>
+      </div>
+    `
+    this.list.appendChild(bookUI)
+    this.bookForm.reset()
   }
 
-  renderDeleteBook() {
-    this.renderAllBooks();
+  renderModulesInSelect(modules) {
+    const selectModules = document.getElementById('id-module')
+    modules.forEach((module) => {
+        const moduleUI = document.createElement('option')
+        moduleUI.value = module.code
+        moduleUI.textContent = module.cliteral
+        selectModules.appendChild(moduleUI)
+    })
   }
 
-  renderMessage(type, message) {
-    const DOMNEWMEssage = document.createElement("div");
-    DOMNEWMEssage.innerHTML = `
-    ${message} 
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">x</button>`;
-    DOMNEWMEssage.className = `${type} alert alert-danger alert-dismissible" role="alert"`;
-    DOMNEWMEssage.setAttribute("role", "alert");
-    this.messages.appendChild(DOMNEWMEssage);
+  renderRemoveBook(id) {
+    const bookUI = document.getElementById('book-'+id)
+    bookUI.parentElement.removeChild(bookUI)
   }
 
-  clearForm() {
-    this.bookForm.reset();
+  renderErrorMessage(type, message) {
+    const messageUI = document.createElement('div')
+    messageUI.className = type + ' alert alert-danger alert-dismissible'
+    messageUI.setAttribute('role', 'alert')
+    messageUI.innerHTML = `
+    ${message}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">x</button>
+    `
+    this.messages.appendChild(messageUI)
+    window.scroll(0,0)
+  }
+
+  getBookFormValues() {
+    const idModule = this.bookForm.elements['id-module'].value
+    // También podríamos coger el input directamente con su id
+    // document.getElementById('id-module').value
+    const publisher = this.bookForm.elements.publisher.value
+    const price = this.bookForm.elements.price.value
+    const pages = this.bookForm.elements.pages.value
+    const status = this.bookForm.querySelector('input[name="status"]:checked').value
+    const comments = this.bookForm.elements.comments.value
+
+    return {
+      idModule,
+      publisher,
+      price,
+      pages,
+      status,
+      comments
+    }
   }
 }
+

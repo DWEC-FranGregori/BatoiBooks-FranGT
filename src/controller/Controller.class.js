@@ -1,63 +1,64 @@
-import Users from "../model/Users.class";
-import Modules from "../model/Modules.class";
-import Books from "../model/Books.class";
-import View from "../view/View.class";
+import Books from '../model/books.class'
+import Users from '../model/users.class'
+import Modules from '../model/modules.class'
+import View from '../view/view.class'
 
 export default class Controller {
   constructor() {
-    this.users = new Users();
-    this.modules = new Modules();
-    this.books = new Books();
-    this.view = new View();
+    this.books = new Books()
+    this.users = new Users()
+    this.modules = new Modules()
+    this.view = new View()
   }
 
   async init() {
-    // Cargar los datos
-    await this.users.populateData();
-    await this.modules.populateData();
-    await this.books.populateData();
-    this.render();
-    this.removeBook();
-  }
-  removeBook() {
-    this.view.remove.addEventListener("click", async (event) => {
-      const bookId = prompt("Introduzce una id de la libro a borrar");
-      try {
-        await this.books.removeItem(bookId);
-      } catch (error) {
-        this.view.renderMessage("error", error.message);
-        return;
+    try {
+      await Promise.all([
+        this.books.populateData(),
+        this.users.populateData(),
+        this.modules.populateData(),
+      ])
+    } catch(err) {
+      this.view.renderErrorMessage('error', 'Error cargando los datos: '+ err)
+      return
+    }
+    this.view.renderErrorMessage('info', 'Datos cargados correctamente')
+    this.view.renderModulesInSelect(this.modules.data)
+    this.books.data.forEach((book) => this.view.renderBook(book))
+
+    this.view.remove.addEventListener('click', async () => {
+      const bookIdToRemove = prompt('Introduce la id del libro que quieres eliminar')
+      if (!bookIdToRemove || isNaN(bookIdToRemove)) {
+        this.view.renderErrorMessage('error', 'Debes introducir una id')
+        return
       }
-      this.view.renderDeleteBook();
-    });
-  }
+      if (!this.books.getBookById(Number(bookIdToRemove)).id) {
+        this.view.renderErrorMessage('error', 'La id introducida no existe')
+        return
+      }
+      try {
+        await this.books.removeItem(Number(bookIdToRemove))
+      } catch(err) {
+        this.view.renderErrorMessage('error', 'Error borrando el libro: '+ err)
+        return
+      }
+      this.view.renderRemoveBook(bookIdToRemove)
+    })
+      
+    this.view.bookForm.addEventListener('submit', async (event) => {
+      event.preventDefault()
 
-  render() {
-    this.view.renderOptionsModule(this.modules);
-    this.view.renderAllBooks(this.books);
+      const payload = this.view.getBookFormValues()
+      payload.price = Number(payload.price)
+      payload.pages = Number(payload.pages)
 
-    this.view.form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const idModule = document.getElementById("id-module").value;
-      const publisher = document.getElementById("publisher").value;
-      const price = document.getElementById("price").value;
-      const pages = document.getElementById("pages").value;
-      const comments = document.getElementById("comments").value;
-
-      const book = await this.books.addItem({
-        idUser: 2,
-        idModule,
-        publisher,
-        price,
-        pages,
-        comments,
-        photo: "",
-        soldDate: "",
-        status: "",
-      });
-
-      this.view.renderBook(book);
-      this.view.clearForm();
-    });
+      try {
+        const book = await this.books.addItem(payload)
+        this.view.renderBook(book)
+      } catch(err) {
+        this.view.renderErrorMessage('error', 'Error borrando el libro: '+ err)
+        return
+      }
+    })
   }
 }
