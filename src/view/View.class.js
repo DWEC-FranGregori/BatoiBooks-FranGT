@@ -52,7 +52,7 @@ export default class View {
     bookUI.parentElement.removeChild(bookUI);
   }
 
-  renderErrorMessage(type, message) {
+  renderMessage(type, message) {
     const messageUI = document.createElement("div");
     messageUI.className = type + " alert alert-danger alert-dismissible";
     messageUI.setAttribute("role", "alert");

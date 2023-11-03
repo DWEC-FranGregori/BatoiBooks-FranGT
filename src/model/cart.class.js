@@ -11,7 +11,7 @@ export default class Cart {
   }
 
   addItem(book) {
-    if (this.getBookById(book.id) != {}) {
+    if (this.data.find((b) => b.id === book.id)) {
       throw new Error("No se pueden añadir 2 libros iguales");
     }
     this.data.push(book);
