@@ -1,6 +1,7 @@
 import Books from "../model/books.class";
 import Users from "../model/users.class";
 import Modules from "../model/modules.class";
+import Modules from "../model/cart.class";
 import View from "../view/view.class";
 
 export default class Controller {
@@ -8,6 +9,7 @@ export default class Controller {
     this.books = new Books();
     this.users = new Users();
     this.modules = new Modules();
+    this.cart = new Cart();
     this.view = new View();
   }
 
