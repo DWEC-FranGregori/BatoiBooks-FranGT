@@ -3,7 +3,6 @@ export default class View {
     this.list = document.getElementById("list");
     this.about = document.getElementById("about");
     this.form = document.getElementById("form");
-    this.remove = document.getElementById("remove");
     this.bookForm = document.getElementById("bookForm");
     this.messages = document.getElementById("messages");
   }
@@ -22,19 +21,20 @@ export default class View {
         <p>Estado: ${book.status}</p>
         <p>${book.soldDate ? "Vendido el " + book.soldDate : "En venta"}</p>
         <p>Comentarios: ${book.comments || ""}</p>
-        <button>
+        <button class="add">
           <span class="material-icons">add_shopping_cart</span>
         </button>
-        <button>
+        <button class="edit">
           <span class="material-icons">edit</span>
         </button>
-        <button>
+        <button class="delete">
           <span class="material-icons">delete</span>
         </button>
       </div>
     `;
     this.list.appendChild(bookUI);
     this.bookForm.reset();
+    return bookUI;
   }
 
   renderModulesInSelect(modules) {
