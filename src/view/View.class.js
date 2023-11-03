@@ -22,6 +22,15 @@ export default class View {
         <p>Estado: ${book.status}</p>
         <p>${book.soldDate ? "Vendido el " + book.soldDate : "En venta"}</p>
         <p>Comentarios: ${book.comments || ""}</p>
+        <button>
+          <span class="material-icons">add_shopping_cart</span>
+        </button>
+        <button>
+          <span class="material-icons">edit</span>
+        </button>
+        <button>
+          <span class="material-icons">delete</span>
+        </button>
       </div>
     `;
     this.list.appendChild(bookUI);
