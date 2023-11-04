@@ -55,6 +55,7 @@ export default class Controller {
         }
         this.view.renderRemoveBook(book.id);
       });
+
       DOMBook.querySelector(".add").addEventListener("click", async () => {
         const isReady = confirm(
           `¿Está seguro que quiere añadir el libro ${book.id} con módulo ${book.idModule}?`
@@ -76,7 +77,35 @@ export default class Controller {
         } catch (err) {
           this.view.renderMessage(
             "error",
-            "Error, no se pudo borrar el libro: " + err
+            "Error, no se pudo añadir el libro: " + err
+          );
+          return;
+        }
+        // ahould render alls books from cart
+      });
+
+      DOMBook.querySelector(".edit").addEventListener("click", async () => {
+        const isReady = confirm(
+          `¿Está seguro que quiere editar el libro ${book.id} con módulo ${book.idModule}?`
+        );
+        if (!isReady) {
+          this.view.renderMessage(
+            "error",
+            `Edición cancelada del libro ${book.id} con módulo ${book.idModule}`
+          );
+          return;
+        }
+
+        try {
+          await this.cart.addItem(book);
+          this.view.renderMessage(
+            "info",
+            `Libro ${book.id} con módulo ${book.idModule} añadido al carro`
+          );
+        } catch (err) {
+          this.view.renderMessage(
+            "error",
+            "Error, no se pudo editar el libro: " + err
           );
           return;
         }
