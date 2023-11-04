@@ -15,7 +15,7 @@ export default class Cart {
       throw new Error("No se pueden añadir 2 libros iguales");
     }
     this.data.push(book);
-    const copyBook = book;
+    const copyBook = Object.assign({}, book);
     return copyBook;
   }
 
