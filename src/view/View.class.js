@@ -88,4 +88,11 @@ export default class View {
   clearForm() {
     this.bookForm.reset();
   }
+
+  renderBookToEdit(book) {
+    document.getElementById("id-module").value = `${book.idModule}`;
+    document.getElementById("publisher").value = `${book.publisher}`;
+    document.getElementById("price").value = `${book.price}`;
+    document.getElementById("pages").value = `${book.pages}`;
+  }
 }

@@ -98,10 +98,11 @@ export default class Controller {
         }
 
         try {
-          await this.books.addItem(book);
+          //await this.books.changeItem(book);
+          this.view.renderBookToEdit(book);
           this.view.renderMessage(
             "info",
-            `Libro ${book.id} con módulo ${book.idModule} añadido al carro`
+            `Libro ${book.id} con módulo ${book.idModule} editado`
           );
         } catch (err) {
           this.view.renderMessage(
