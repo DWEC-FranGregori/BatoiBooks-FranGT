@@ -74,6 +74,7 @@ export default class Controller {
             "info",
             `Libro ${book.id} con módulo ${book.idModule} añadido al carro`
           );
+          this.view.clearForm();
         } catch (err) {
           this.view.renderMessage(
             "error",
@@ -97,7 +98,7 @@ export default class Controller {
         }
 
         try {
-          await this.cart.addItem(book);
+          await this.books.addItem(book);
           this.view.renderMessage(
             "info",
             `Libro ${book.id} con módulo ${book.idModule} añadido al carro`

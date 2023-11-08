@@ -85,4 +85,7 @@ export default class View {
       comments,
     };
   }
+  clearForm() {
+    this.bookForm.reset();
+  }
 }
