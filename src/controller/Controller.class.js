@@ -100,6 +100,7 @@ export default class Controller {
         try {
           //await this.books.changeItem(book);
           this.view.renderBookToEdit(book);
+          this.view.changeSubmitTextTo("Confirmar");
           this.view.renderMessage(
             "info",
             `Libro ${book.id} con módulo ${book.idModule} editado`
@@ -113,6 +114,26 @@ export default class Controller {
         }
         // ahould render alls books from cart
       });
+    });
+    this.view.bookForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const idUser = 2; // guardo el usuario que soy yo
+
+      const payload = this.view.getBookFormValues();
+      payload.price = Number(payload.price);
+      payload.pages = Number(payload.pages);
+      payload.idUser = idUser;
+
+      try {
+        const book = await this.books.addItem(payload);
+        this.view.renderBook(book);
+      } catch (err) {
+        this.view.renderErrorMessage(
+          "error",
+          "Error guardando el libro: " + err
+        );
+        return;
+      }
     });
   }
 }

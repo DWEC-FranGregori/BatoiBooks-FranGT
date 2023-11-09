@@ -1959,15 +1959,13 @@
       "id": 14
     },
     {
-      "idUser": 2,
-      "idModule": "0016",
-      "publisher": "SL",
-      "price": "43",
-      "pages": "234",
+      "idModule": "0013",
+      "publisher": "AA",
+      "price": 23,
+      "pages": 4333,
+      "status": "good",
       "comments": "",
-      "photo": "",
-      "soldDate": "",
-      "status": "",
+      "idUser": 2,
       "id": 15
     }
   ]

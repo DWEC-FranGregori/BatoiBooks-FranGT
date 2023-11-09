@@ -45,7 +45,7 @@ document.querySelector("#app").innerHTML = `
 
         <div>
           <label>Estado:</label>
-          <input type="radio" name="status" value="new">new
+          <input type="radio" name="status" value="new" class>new
           <input type="radio" name="status" value="good">good
           <input type="radio" name="status" value="bad">bad
         </div>

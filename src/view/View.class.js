@@ -94,5 +94,19 @@ export default class View {
     document.getElementById("publisher").value = `${book.publisher}`;
     document.getElementById("price").value = `${book.price}`;
     document.getElementById("pages").value = `${book.pages}`;
+    document.getElementById("comments").value = `${book.comments}`;
+    const radioButtons = document.querySelectorAll(
+      'input[type="radio"][name="status"]'
+    );
+    radioButtons.forEach((botton) => {
+      if (botton.value === book.status) {
+        botton.checked = true;
+      }
+    });
+  }
+
+  changeSubmitTextTo(text) {
+    const submitButton = document.querySelector('button[type="submit"]');
+    submitButton.textContent = `${text}`;
   }
 }
