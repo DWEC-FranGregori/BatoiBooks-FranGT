@@ -1863,40 +1863,34 @@
   ],
   "books": [
     {
-      "idUser": 3,
-      "idModule": "5021",
-      "publisher": "McGraw-Hill",
-      "price": 75,
-      "pages": 273,
+      "id": 6,
+      "idModule": "0016",
+      "publisher": "SL DR",
+      "price": 23,
+      "pages": 434,
       "status": "new",
-      "photo": "",
-      "comments": "Sense obrir",
-      "soldDate": "",
-      "id": 6
+      "comments": "",
+      "idUser": 2
     },
     {
-      "idUser": 4,
+      "id": 8,
       "idModule": "5025",
       "publisher": "McGraw-Hill",
-      "price": 42.8,
+      "price": 50,
       "pages": 173,
       "status": "good",
-      "photo": "",
       "comments": "",
-      "soldDate": "",
-      "id": 8
+      "idUser": 2
     },
     {
-      "idUser": 4,
+      "id": 9,
       "idModule": "5025",
       "publisher": "Apunts",
-      "price": 99.85,
+      "price": 100,
       "pages": 73,
       "status": "good",
-      "photo": "",
       "comments": "",
-      "soldDate": "",
-      "id": 9
+      "idUser": 2
     },
     {
       "idUser": 5,
@@ -1911,16 +1905,14 @@
       "id": 10
     },
     {
-      "idUser": 2,
+      "id": 11,
       "idModule": "0015",
       "publisher": "SL",
-      "price": "39",
-      "pages": "273",
+      "price": 39,
+      "pages": 273,
+      "status": "good",
       "comments": "",
-      "photo": "",
-      "soldDate": "",
-      "status": "",
-      "id": 11
+      "idUser": 2
     },
     {
       "idUser": 2,
@@ -1947,16 +1939,14 @@
       "id": 13
     },
     {
-      "idUser": 2,
+      "id": 14,
       "idModule": "0018",
       "publisher": "SL",
-      "price": "384",
-      "pages": "34",
+      "price": 1000,
+      "pages": 34,
+      "status": "good",
       "comments": "",
-      "photo": "",
-      "soldDate": "",
-      "status": "",
-      "id": 14
+      "idUser": 2
     },
     {
       "idModule": "0013",
@@ -1967,6 +1957,97 @@
       "comments": "",
       "idUser": 2,
       "id": 15
+    },
+    {
+      "id": 16,
+      "idUser": 2,
+      "idModule": "0018",
+      "publisher": "SL",
+      "price": 384,
+      "pages": 34,
+      "status": "new",
+      "comments": "",
+      "soldDate": ""
+    },
+    {
+      "id": 17,
+      "idModule": "0018",
+      "publisher": "SL",
+      "price": 400,
+      "pages": 34,
+      "status": "new",
+      "comments": "",
+      "idUser": 2
+    },
+    {
+      "idModule": "0018",
+      "publisher": "SL",
+      "price": 300,
+      "pages": 34,
+      "status": "new",
+      "comments": "",
+      "idUser": 2,
+      "id": 18
+    },
+    {
+      "idModule": "0018",
+      "publisher": "SL",
+      "price": 300,
+      "pages": 34,
+      "status": "new",
+      "comments": "",
+      "idUser": 2,
+      "id": 19
+    },
+    {
+      "idModule": "0018",
+      "publisher": "SL",
+      "price": 300,
+      "pages": 50,
+      "status": "new",
+      "comments": "",
+      "idUser": 2,
+      "id": 20
+    },
+    {
+      "id": 21,
+      "idModule": "0018",
+      "publisher": "SL FRAN",
+      "price": 1000,
+      "pages": 100,
+      "status": "bad",
+      "comments": "",
+      "idUser": 2
+    },
+    {
+      "id": 22,
+      "idModule": "0013",
+      "publisher": "FRAN SL",
+      "price": 30,
+      "pages": 10,
+      "status": "good",
+      "comments": "",
+      "idUser": 2
+    },
+    {
+      "id": 23,
+      "idModule": "0020",
+      "publisher": "SL FRAN",
+      "price": 23,
+      "pages": 43,
+      "status": "new",
+      "comments": "hdoadorr",
+      "idUser": 2
+    },
+    {
+      "id": 24,
+      "idModule": "0014",
+      "publisher": "SL",
+      "price": 100,
+      "pages": 20,
+      "status": "good",
+      "comments": "",
+      "idUser": 2
     }
   ]
 }

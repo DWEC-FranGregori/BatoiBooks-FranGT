@@ -2,7 +2,7 @@ import Books from "../model/books.class";
 import Users from "../model/users.class";
 import Modules from "../model/modules.class";
 import Cart from "../model/cart.class";
-import View from "../view/view.class";
+import View from "../view/View.class";
 
 export default class Controller {
   constructor() {
@@ -97,22 +97,9 @@ export default class Controller {
           return;
         }
 
-        try {
-          //await this.books.changeItem(book);
-          this.view.renderBookToEdit(book);
-          this.view.changeSubmitTextTo("Confirmar");
-          this.view.renderMessage(
-            "info",
-            `Libro ${book.id} con módulo ${book.idModule} editado`
-          );
-        } catch (err) {
-          this.view.renderMessage(
-            "error",
-            "Error, no se pudo editar el libro: " + err
-          );
-          return;
-        }
-        // ahould render alls books from cart
+        this.view.changeFormTitle("Editar");
+        this.view.changeSubmitText("Cambiar");
+        this.view.renderBookInForm(book);
       });
     });
     this.view.bookForm.addEventListener("submit", async (event) => {
@@ -125,13 +112,26 @@ export default class Controller {
       payload.idUser = idUser;
 
       try {
-        const book = await this.books.addItem(payload);
-        this.view.renderBook(book);
-      } catch (err) {
-        this.view.renderErrorMessage(
-          "error",
-          "Error guardando el libro: " + err
+        let book;
+        let message = "añadido";
+        if (this.view.getId() === "hidden") {
+          book = await this.books.addItem(payload);
+          this.view.renderBook(book);
+        } else {
+          message = "editado";
+          book = await this.books.updateItem(payload);
+          this.view.changeFormTitle("Añadir");
+          this.view.hideId();
+          this.view.clearForm();
+          this.view.changeSubmitText("Añadir");
+          this.view.renderUpdatedBook(book);
+        }
+        this.view.renderMessage(
+          "info",
+          `Libro ${book.id} con módulo ${book.idModule} ${message} correctamente`
         );
+      } catch (err) {
+        this.view.renderMessage("error", "Error guardando el libro: " + err);
         return;
       }
     });

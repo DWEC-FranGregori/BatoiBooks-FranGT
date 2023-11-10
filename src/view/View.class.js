@@ -14,13 +14,15 @@ export default class View {
     bookUI.innerHTML = `
     <img src="${book.photo}" alt="Lbro: ${book.id}">
       <div>
-        <h5>${book.idModule + " (" + book.id + ")"}</h5>
-        <h6>${book.publisher}</h6>
-        <p>Precio: ${book.price} €</p>
-        <p>Páginas: ${book.pages}</p>
-        <p>Estado: ${book.status}</p>
-        <p>${book.soldDate ? "Vendido el " + book.soldDate : "En venta"}</p>
-        <p>Comentarios: ${book.comments || ""}</p>
+        <h5 class="module">${book.idModule + " (" + book.id + ")"}</h5>
+        <h6 class="publisher">${book.publisher}</h6>
+        <p class="price">Precio: ${book.price} €</p>
+        <p class="pages">Páginas: ${book.pages}</p>
+        <p class="status">Estado: ${book.status}</p>
+        <p class="soldDate">${
+          book.soldDate ? "Vendido el " + book.soldDate : "En venta"
+        }</p>
+        <p class="comments">Comentarios: ${book.comments || ""}</p>
         <button class="add">
           <span class="material-icons">add_shopping_cart</span>
         </button>
@@ -35,6 +37,21 @@ export default class View {
     this.list.appendChild(bookUI);
     this.bookForm.reset();
     return bookUI;
+  }
+
+  renderUpdatedBook(book) {
+    const bookUI = document.getElementById(`${"book-" + book.id}`);
+    bookUI.querySelector(".module").innerText = `${book.idModule} ${book.id}`;
+    bookUI.querySelector(".publisher").innerText = `${book.publisher}`;
+    bookUI.querySelector(".price").innerText = `Precio: ${book.price} €`;
+    bookUI.querySelector(".pages").innerText = `Páginas: ${book.pages}`;
+    bookUI.querySelector(".status").innerText = `Estado: ${book.status}`;
+    bookUI.querySelector(".soldDate").innerText = `${
+      book.soldDate ? "Vendido el " + book.soldDate : "En venta"
+    }`;
+    bookUI.querySelector(".comments").innerText = `Comentarios: ${
+      book.comments || ""
+    }`;
   }
 
   renderModulesInSelect(modules) {
@@ -65,6 +82,7 @@ export default class View {
   }
 
   getBookFormValues() {
+    const id = document.getElementById("id").value;
     const idModule = this.bookForm.elements["id-module"].value;
     // También podríamos coger el input directamente con su id
     // document.getElementById('id-module').value
@@ -77,6 +95,7 @@ export default class View {
     const comments = this.bookForm.elements.comments.value;
 
     return {
+      id,
       idModule,
       publisher,
       price,
@@ -89,12 +108,14 @@ export default class View {
     this.bookForm.reset();
   }
 
-  renderBookToEdit(book) {
-    document.getElementById("id-module").value = `${book.idModule}`;
-    document.getElementById("publisher").value = `${book.publisher}`;
-    document.getElementById("price").value = `${book.price}`;
-    document.getElementById("pages").value = `${book.pages}`;
-    document.getElementById("comments").value = `${book.comments}`;
+  renderBookInForm(book) {
+    document.getElementById("id-book").removeAttribute("hidden");
+    document.getElementById("id").value = book.id;
+    document.getElementById("id-module").value = book.idModule;
+    document.getElementById("publisher").value = book.publisher;
+    document.getElementById("price").value = book.price;
+    document.getElementById("pages").value = book.pages;
+    document.getElementById("comments").value = book.comments;
     const radioButtons = document.querySelectorAll(
       'input[type="radio"][name="status"]'
     );
@@ -105,8 +126,21 @@ export default class View {
     });
   }
 
-  changeSubmitTextTo(text) {
+  changeFormTitle(text) {
+    const title = document.getElementById("title");
+    title.textContent = `${text} Libro`;
+  }
+
+  changeSubmitText(text) {
     const submitButton = document.querySelector('button[type="submit"]');
     submitButton.textContent = `${text}`;
+  }
+
+  getId() {
+    return document.getElementById("id-book").getAttribute("hidden");
+  }
+
+  hideId() {
+    document.getElementById("id-book").setAttribute("hidden", "hidden");
   }
 }
