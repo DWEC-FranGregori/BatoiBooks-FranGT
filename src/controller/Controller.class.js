@@ -135,5 +135,24 @@ export default class Controller {
         return;
       }
     });
+    window.addEventListener("hashchange", function () {
+      const URL = String(window.location);
+
+      const listElement = document.getElementById("list");
+      const formElement = document.getElementById("form");
+      const aboutElement = document.getElementById("about");
+
+      listElement.setAttribute("hidden", "true");
+      formElement.setAttribute("hidden", "true");
+      formElement.setAttribute("hidden", "true");
+
+      if (URL.includes("list")) {
+        listElement.removeAttribute("hidden");
+      } else if (URL.includes("form")) {
+        formElement.removeAttribute("hidden");
+      } else {
+        aboutElement.removeAttribute("hidden");
+      }
+    });
   }
 }

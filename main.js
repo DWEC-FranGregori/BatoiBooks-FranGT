@@ -10,9 +10,9 @@ document.querySelector("#app").innerHTML = `
   </header>
   <nav>
     <ul>
-      <li><a href="#list">Ver Libros</a></li>
-      <li><a href="#form">Añadir Libro</a></li>
-      <li><a href="#about">Acerca de...</a></li>
+      <li><a href="#list" id="menu-list">Ver Libros</a></li>
+      <li><a href="#form" id="menu-form">Añadir Libro</a></li>
+      <li><a href="#about" id="menu-about">Acerca de...</a></li>
     </ul>
   </nav>
   <div id="messages">
