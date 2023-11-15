@@ -109,20 +109,27 @@ export default class Controller {
         return;
       }
 
-      const payload = this.view.getBookFormValues();
-      payload.price = Number(payload.price);
-      payload.pages = Number(payload.pages);
-      payload.idUser = idUser;
+      let book = this.view.getBookFormValues();
+      book.price = Number(book.price);
+      book.pages = Number(book.pages);
+      book.idUser = idUser;
+
+      const error = this.view.bookForm.querySelector("span.error");
+      error.innerHTML = "";
+      const exists = await this.books.isCreated(idUser, book.idModule);
+      if (exists) {
+        error.innerHTML = "El libro ya existe weyyy";
+        return;
+      }
 
       try {
-        let book;
         let message = "añadido";
         if (this.view.getId() === "hidden") {
-          book = await this.books.addItem(payload);
+          book = await this.books.addItem(book);
           this.view.renderBook(book);
         } else {
           message = "editado";
-          book = await this.books.updateItem(payload);
+          book = await this.books.updateItem(book);
           this.view.changeFormTitle("Añadir");
           this.view.hideId();
           this.view.clearForm();

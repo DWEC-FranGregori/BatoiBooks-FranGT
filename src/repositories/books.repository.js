@@ -1,77 +1,106 @@
-const SERVER = import.meta.env.VITE_URL_API
+const SERVER = import.meta.env.VITE_URL_API;
 
 export default class BooksRepository {
   async getAllBooks() {
-    const response = await fetch(SERVER + '/books')
+    const response = await fetch(SERVER + "/books");
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
+  }
+
+  async getBookByIdModule(idModule) {
+    const response = await fetch(SERVER + `/books?idModule${idModule}`);
+    if (!response.ok) {
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+    }
+    const data = await response.json();
+    return data;
+  }
+
+  async getBookByIdUser(idUser) {
+    const response = await fetch(SERVER + `/books?idUser${idUser}`);
+    if (!response.ok) {
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+    }
+    const data = await response.json();
+    return data;
+  }
+
+  async getBookByIdUserAndIdModule(idUser, idModule) {
+    const response = await fetch(
+      SERVER + `/books?idUser=${idUser}&idModule=${idModule}`
+    );
+    if (!response.ok) {
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+    }
+    const data = await response.json();
+    return data;
   }
 
   async getBookById(idBook) {
-    const response = await fetch(SERVER + `/books/${idBook}`)
+    const response = await fetch(SERVER + `/books/${idBook}`);
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   }
 
   async addBook(item) {
     const response = await fetch(SERVER + `/books`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(item),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   }
 
   async removeBook(id) {
     const response = await fetch(SERVER + `/books/${id}`, {
-      method: 'DELETE',
-    })
+      method: "DELETE",
+    });
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   }
 
   async changeBook(item) {
     const response = await fetch(SERVER + `/books/${item.id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(item),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   }
 
   async updatePriceOfBook(idBook, newPrice) {
     const response = await fetch(SERVER + `/books/${idBook}`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify({ price: newPrice }),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    })
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   }
 }

@@ -22,6 +22,7 @@ document.querySelector("#app").innerHTML = `
     <div id="form">
       <form id="bookForm" novalidate>
         <h1 id="title">Añadir libro</h1>
+        <span class="error"></span>
         <div hidden="hidden" id="id-book">
           <input type="text" id="id" name="id" disabled>
           <span class="error"></span>

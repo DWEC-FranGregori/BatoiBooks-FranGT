@@ -115,4 +115,13 @@ export default class Books {
       book.price = bookChanged.price;
     });
   }
+
+  async isCreated(idUser, idModule) {
+    const repository = new BooksRepository();
+    const book = await repository.getBookByIdUserAndIdModule(idUser, idModule);
+    if (book.length === 0) {
+      return false;
+    }
+    return true;
+  }
 }
