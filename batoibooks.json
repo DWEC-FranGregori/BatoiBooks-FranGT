@@ -2048,6 +2048,16 @@
       "status": "good",
       "comments": "",
       "idUser": 2
+    },
+    {
+      "id": 25,
+      "idModule": "0016",
+      "publisher": "SL",
+      "price": 30,
+      "pages": 400,
+      "status": "good",
+      "comments": "",
+      "idUser": 2
     }
   ]
 }

@@ -20,43 +20,50 @@ document.querySelector("#app").innerHTML = `
   <div id="list">
   </div>
     <div id="form">
-      <form id="bookForm">
+      <form id="bookForm" novalidate>
         <h1 id="title">Añadir libro</h1>
         <div hidden="hidden" id="id-book">
           <input type="text" id="id" name="id" disabled>
+          <span class="error"></span>
         </div>
         <div>
           <label for="id-module">Módulo:</label>
           <select id="id-module" required>
             <option>- Selecciona un módulo -</option>
           </select><br>
+          <span class="error"></span>
         </div>
 
         <div>
           <label for="publisher">Editorial:</label>
           <input type="text" id="publisher" required><br>
+          <span class="error"></span>
         </div>
 
         <div>
           <label for="price">Precio:</label>
-          <input type="number" id="price" required><br>
+          <input type="number" id="price" required min="0" pattern="pattern="^\d*(\.\d{0,2})?$""><br>
+          <span class="error"></span>
         </div>
 
         <div>
           <label for="pages">Páginas:</label>
-          <input type="number" id="pages"><br>
+          <input type="number" id="pages" required min="0"><br>
+          <span class="error"></span>
         </div>
 
         <div>
           <label>Estado:</label>
-          <input type="radio" name="status" value="new" class>new
+          <input type="radio" name="status" value="new" required>new
           <input type="radio" name="status" value="good">good
           <input type="radio" name="status" value="bad">bad
+          <span class="error"></span>
         </div>
 
         <div>
           <label for="comments">Comentarios:</label>
           <textarea id="comments"></textarea>
+          <span class="error"></span>
         </div>
 
         <button type="submit">Añadir</button>

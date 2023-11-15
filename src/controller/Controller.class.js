@@ -105,6 +105,9 @@ export default class Controller {
     this.view.bookForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const idUser = 2; // guardo el usuario que soy yo
+      if (!this.view.validateForm()) {
+        return;
+      }
 
       const payload = this.view.getBookFormValues();
       payload.price = Number(payload.price);

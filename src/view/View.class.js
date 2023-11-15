@@ -143,4 +143,28 @@ export default class View {
   hideId() {
     document.getElementById("id-book").setAttribute("hidden", "hidden");
   }
+
+  validateForm() {
+    if (this.bookForm.checkValidity()) {
+      return true;
+    }
+
+    const elements = Array.from(this.bookForm.elements);
+
+    this.handleErrors(elements);
+    return false;
+  }
+
+  handleErrors(array) {
+    array.forEach((element) => {
+      element;
+      const spanError = element.parentElement.querySelector("span.error");
+
+      if (element.checkValidity()) {
+        spanError.textContent = "";
+      } else {
+        spanError.textContent = element.validationMessage;
+      }
+    });
+  }
 }
