@@ -2068,6 +2068,16 @@
       "status": "good",
       "comments": "",
       "idUser": 2
+    },
+    {
+      "id": 27,
+      "idModule": "0012",
+      "publisher": "SQ",
+      "price": 10,
+      "pages": 10,
+      "status": "bad",
+      "comments": "",
+      "idUser": 2
     }
   ]
 }
